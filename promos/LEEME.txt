@@ -1,0 +1,1 @@
+Imágenes del banner de promociones de Navidad. Se listan en PROMOS dentro de acrilmastik/web/src.html.
