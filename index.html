@@ -713,30 +713,7 @@ body::before{background:#0a0a0a}
     </div>
   </section>
 
-  <section class="sec sec--hundida" id="combinaciones">
-    <div class="wrap combo-wrap">
-      <div>
-        <div class="sec__cab" style="margin-bottom:20px">
-          <p class="eyebrow">Combinaciones de color</p>
-          <h2>¿No sabes qué colores van juntos?</h2>
-          <p>Ese es nuestro fuerte. Escoge un espacio y mira una combinación lista: un color para las paredes, uno de acento y uno para los detalles.</p>
-        </div>
-        <div class="espacios" role="group" aria-label="Escoge un espacio" id="espacios"></div>
-        <p class="combo-nota">Todos los colores son de nuestra carta, con su referencia. En el punto o por WhatsApp te armamos la combinación para tu espacio.</p>
-      </div>
-      <article class="combo" aria-live="polite">
-        <div class="cuarto" id="cuarto"></div>
-        <div class="combo__cuerpo">
-          <p class="combo__para" id="c-para"></p>
-          <h3 class="combo__nombre" id="c-nombre"></h3>
-          <ul class="combo__lista" id="c-lista"></ul>
-          <div><a class="btn btn--primario" id="c-btn" href="#">Pide esta combinación</a></div>
-        </div>
-      </article>
-    </div>
-  </section>
-
-  <section class="sec" id="opiniones">
+  <section class="sec sec--hundida" id="opiniones">
     <div class="wrap opin">
       <div class="sec__cab" style="margin-bottom:0">
         <p class="eyebrow">Opiniones</p>
@@ -755,7 +732,7 @@ body::before{background:#0a0a0a}
     </div>
   </section>
 
-  <section class="sec sec--hundida" id="comprar">
+  <section class="sec" id="comprar">
     <div class="wrap">
       <div class="sec__cab">
         <p class="eyebrow">Cómo comprar</p>
@@ -769,7 +746,7 @@ body::before{background:#0a0a0a}
     </div>
   </section>
 
-  <section class="sec" id="visitanos">
+  <section class="sec sec--hundida" id="visitanos">
     <div class="wrap">
       <div class="sec__cab">
         <p class="eyebrow">Visítanos</p>
@@ -1565,40 +1542,6 @@ body::before{background:#0a0a0a}
   document.getElementById('ct-1').addEventListener('click', function(){ tipoCarta(1); });
   document.getElementById('ct-2').addEventListener('click', function(){ tipoCarta(2); });
   pintarCarta();
-
-  /* Combinaciones de ejemplo (60-30-10) */
-  var COMBOS = {
-    'Sala': { para:'Para sala y comedor', nombre:'Tarde en el Combeima', c:[['#E2DBBE','Almendra · 31042','Paredes · 60%'],['#607761','Verde Aceituna · 31012','Pared de acento · 30%'],['#B86B46','Terracota · 31004','Puertas y detalles · 10%']] },
-    'Cuarto': { para:'Para cuarto principal', nombre:'Descanso de nube', c:[['#ECECE8','Blanco Nube · 31087','Paredes · 60%'],['#5E7C97','Azul Pacífico · 31010','Pared de la cama · 30%'],['#DEC291','Avellán · 31013','Detalles · 10%']] },
-    'Niños': { para:'Para cuarto de niños', nombre:'Recreo', c:[['#F6F2E4','Blanco Duna · 31085','Paredes · 60%'],['#EABC4F','Mango · 31052','Pared de juego · 30%'],['#56B0AB','Océano · 31058','Detalles · 10%']] },
-    'Cocina': { para:'Para cocina', nombre:'Mañana de mercado', c:[['#D9CFAC','Blanco Hueso · 31040','Paredes · 60%'],['#93B68D','Jamaiquino · 31033','Pared de acento · 30%'],['#E87937','Mandarín · 31024','Detalles · 10%']] },
-    'Fachada': { para:'Para fachada', nombre:'Barrio tradicional', c:[['#E2DBC7','Champaña · 31020','Muros · 60%'],['#8F3120','Yahoo! · 31072','Zócalo y columnas · 30%'],['#123A6A','Azul Mediterráneo · 31003','Puertas y rejas · 10%']] }
-  };
-
-  var esp = document.getElementById('espacios'), cuarto = document.getElementById('cuarto');
-  function dibujaCuarto(c, fachada){
-    if (fachada) {
-      return '<svg viewBox="0 0 320 180" preserveAspectRatio="xMidYMid slice"><rect width="320" height="180" fill="#bcd6ea"/><rect x="40" y="40" width="240" height="140" fill="'+c[0][0]+'"/><polygon points="30,44 160,6 290,44" fill="#7c4a32"/><rect x="40" y="150" width="240" height="30" fill="'+c[1][0]+'"/><rect x="138" y="96" width="44" height="84" fill="'+c[2][0]+'"/><rect x="66" y="72" width="44" height="44" fill="'+c[2][0]+'"/><rect x="72" y="78" width="32" height="32" fill="#cfe3f1"/><rect x="210" y="72" width="44" height="44" fill="'+c[2][0]+'"/><rect x="216" y="78" width="32" height="32" fill="#cfe3f1"/><rect x="0" y="176" width="320" height="4" fill="#8e8a80"/></svg>';
-    }
-    return '<svg viewBox="0 0 320 180" preserveAspectRatio="xMidYMid slice"><rect width="320" height="180" fill="'+c[0][0]+'"/><rect x="0" y="0" width="120" height="180" fill="'+c[1][0]+'"/><rect x="0" y="150" width="320" height="30" fill="#b7a58a"/><rect x="0" y="146" width="320" height="4" fill="'+c[2][0]+'"/><rect x="232" y="52" width="58" height="98" fill="'+c[2][0]+'"/><circle cx="279" cy="104" r="2.5" fill="#141414"/><rect x="150" y="40" width="56" height="40" rx="2" fill="#fff" opacity=".85"/><rect x="155" y="45" width="46" height="30" fill="'+c[1][0]+'" opacity=".55"/><rect x="18" y="112" width="150" height="38" rx="6" fill="#f2efe8"/><rect x="24" y="96" width="138" height="24" rx="8" fill="#e4dfd4"/><rect x="40" y="104" width="22" height="14" rx="4" fill="'+c[2][0]+'"/></svg>';
-  }
-  function muestra(k){
-    var d = COMBOS[k];
-    Array.prototype.forEach.call(esp.children, function(b){ b.setAttribute('aria-pressed', b.textContent === k ? 'true':'false'); });
-    cuarto.style.setProperty('--c1', d.c[0][0]);
-    cuarto.innerHTML = dibujaCuarto(d.c, k === 'Fachada');
-    document.getElementById('c-para').textContent = d.para;
-    document.getElementById('c-nombre').textContent = d.nombre;
-    document.getElementById('c-lista').innerHTML = d.c.map(function(x){ return '<li><span class="chip" style="background:'+x[0]+'"></span><b>'+x[1]+'</b><em>'+x[2]+'</em></li>'; }).join('');
-    var btn = document.getElementById('c-btn');
-    btn.setAttribute('data-wa', 'Hola Acrilmastik, me gustó la combinación "'+d.nombre+'" ('+d.para.toLowerCase()+'). ¿Me ayudan a armarla?');
-    wire(btn);
-  }
-  Object.keys(COMBOS).forEach(function(k){
-    var b = document.createElement('button'); b.type = 'button'; b.className = 'espacio'; b.textContent = k;
-    b.addEventListener('click', function(){ muestra(k); }); esp.appendChild(b);
-  });
-  muestra('Sala');
 
   /* Abanico de la portada, como el del logo */
   var svg = document.getElementById('abanico'), NS = 'http://www.w3.org/2000/svg';
