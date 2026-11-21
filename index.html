@@ -577,6 +577,21 @@ body::before{background:#0a0a0a}
 }
 @media (prefers-reduced-motion:reduce){.nieve{display:none}}
 .vin__foto img{max-height:230px;width:auto;object-fit:contain}
+/* ===== Tito el tucán ===== */
+.f-tito{--x:1%;--w:28%;--y:0%;--z:8;--d:.5s;filter:drop-shadow(0 0 1px rgba(255,255,255,.45)) drop-shadow(0 0 22px rgba(252,240,16,.22)) drop-shadow(0 12px 16px rgba(0,0,0,.6))}
+.tito{position:fixed;z-index:56;right:calc(16px + env(safe-area-inset-right,0px));bottom:calc(66px + env(safe-area-inset-bottom,0px));display:flex;align-items:flex-end;gap:6px;pointer-events:none;transition:bottom .25s ease}
+body.con-barra .tito{bottom:calc(136px + env(safe-area-inset-bottom,0px))}
+.tito__img{width:70px;height:auto;margin-right:-6px;pointer-events:auto;cursor:pointer;filter:drop-shadow(0 0 1px rgba(255,255,255,.5)) drop-shadow(0 6px 10px rgba(0,0,0,.6));transform-origin:50% 100%;animation:titoEntra .6s cubic-bezier(.2,.8,.2,1) both 1.2s}
+.tito__img.salta{animation:titoSalta .6s ease}
+@keyframes titoEntra{from{opacity:0;transform:translateY(30px) scale(.8)}}
+@keyframes titoSalta{30%{transform:translateY(-14px) rotate(-6deg)}60%{transform:translateY(0) rotate(3deg)}}
+.tito__globo{position:relative;max-width:230px;margin-bottom:46px;padding:12px 34px 12px 14px;border-radius:16px 16px 4px 16px;background:#f7f5ef;color:#141414;font-size:14px;font-weight:700;line-height:1.35;box-shadow:0 10px 30px rgba(0,0,0,.5);pointer-events:auto;opacity:0;transform:translateY(8px) scale(.96);transform-origin:100% 100%;transition:opacity .25s ease,transform .25s ease;visibility:hidden}
+.tito__globo.ver{opacity:1;transform:none;visibility:visible}
+.tito__globo a{display:inline-block;margin-top:6px;font-family:var(--f-cond);font-weight:600;font-size:13px;letter-spacing:.06em;text-transform:uppercase;color:#141414;background:var(--amarillo);border:1.5px solid #141414;border-radius:999px;padding:4px 12px;text-decoration:none}
+.tito__globo a:empty{display:none}
+.tito__cerrar{position:absolute;top:6px;right:6px;width:24px;height:24px;border:0;border-radius:50%;background:transparent;color:#5b564d;font-size:14px;cursor:pointer}
+@media (max-width:640px){.f-tito{--x:12%;--w:26%}.tito{bottom:calc(60px + env(safe-area-inset-bottom,0px))}.tito__img{width:60px}.tito__globo{max-width:190px;font-size:13px;margin-bottom:40px}}
+@media (prefers-reduced-motion:reduce){.tito__img{animation:none}}
 .vin__foto img.cambio{animation:fotoIn .35s ease}
 @keyframes fotoIn{from{opacity:0;transform:scale(.94)}}
 </style>
@@ -635,6 +650,7 @@ body::before{background:#0a0a0a}
           <img class="f f-g1" src="img/galon-t1.webp" alt="" width="520" height="595">
           <img class="f f-q1" src="img/cuarto.webp" alt="" width="368" height="620">
           <img class="f f-q2" src="img/cuarto.webp" alt="" width="368" height="620">
+          <img class="f f-tito" src="img/tito-pintando.webp" alt="Tito el tucán, con su rodillo, listo para pintar" width="473" height="560">
         </div>
       </div>
     </div>
@@ -1299,6 +1315,10 @@ body::before{background:#0a0a0a}
   </aside>
 </div>
 
+<div class="tito" id="tito" aria-live="polite">
+  <div class="tito__globo" id="tito-globo" role="status"><span id="tito-txt"></span><br><a id="tito-btn" href="#" target="_blank" rel="noopener"></a><button class="tito__cerrar" id="tito-cerrar" type="button" aria-label="Cerrar mensaje de Tito">✕</button></div>
+  <img class="tito__img" id="tito-img" src="img/tito-saludando.webp" alt="Tito, el asesor de Acrilmastik" width="243" height="260">
+</div>
 <a class="wa-flot" data-wa="Hola Acrilmastik, vi su página y quiero información." href="#" aria-label="Escríbenos por WhatsApp">
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 21l1.7-5A8.5 8.5 0 1 1 8 19.3L3 21z"/><path d="M9 10c.5 2 2 3.5 4 4l1.3-1.3 2 1-.5 1.6c-3 .5-7-3.5-6.5-6.5L11 8.3l1 2z"/></svg>
 </a>
@@ -1328,6 +1348,7 @@ body::before{background:#0a0a0a}
     guardar(); pintarCarro();
     var b = document.getElementById('abrir-carro'); b.classList.remove('pulso'); void b.offsetWidth; b.classList.add('pulso');
     avisar('Agregado: ' + item.nombre + (item.det && item.det !== 'Unidad' ? ' · ' + item.det : ''));
+    if (window.tito) window.tito('pulgar');
   }
   function totalCarro(){ return CARRO.reduce(function(t, x){ return t + x.precio * x.qty; }, 0); }
   function unidades(){ return CARRO.reduce(function(t, x){ return t + x.qty; }, 0); }
@@ -1405,6 +1426,7 @@ body::before{background:#0a0a0a}
     if (!CARRO.length){ e.preventDefault(); return; }
     if (!document.getElementById('c-acepto').checked){ e.preventDefault(); var er = document.getElementById('consent-err'); er.textContent = 'Para enviar tu pedido, acepta la Política de Tratamiento de Datos y los Términos.'; document.getElementById('c-acepto').focus(); return; }
     this.href = waLink(mensaje());
+    if (window.tito) window.tito('celebra');
   });
   document.querySelectorAll('.consent a').forEach(function(a){ a.addEventListener('click', function(){ cerrarCarro(); }); });
 
@@ -1851,6 +1873,28 @@ body::before{background:#0a0a0a}
     document.getElementById('promo-sig').onclick = function(){ ir(actual + 1); reiniciar(); };
     if (slides.length < 2) document.getElementById('promos-nav').style.display = 'none';
     marcar(); reiniciar();
+  }
+
+  /* Tito el tucán: asesor junto al botón de WhatsApp y reacciones del carrito */
+  var tImg = document.getElementById('tito-img'), tGlobo = document.getElementById('tito-globo'),
+      tTxt = document.getElementById('tito-txt'), tBtn = document.getElementById('tito-btn'), tT;
+  function leer(k){ try { return localStorage.getItem(k); } catch(e){ return null; } }
+  function guardarK(k, v){ try { localStorage.setItem(k, v); } catch(e){} }
+  function globo(txt, btn, msg){ tTxt.textContent = txt; tBtn.textContent = btn || ''; if (btn) tBtn.href = waLink(msg); tGlobo.classList.add('ver'); }
+  function saluda(){ tImg.src = 'img/tito-saludando.webp'; globo('¡Hola! Soy Tito. ¿Te ayudo a escoger tu color?', 'Escríbenos', 'Hola Acrilmastik, vi la página y quiero ayuda para escoger mi color.'); }
+  var POSES = { pulgar: ['img/tito-pulgar.webp', '¡Listo! Ya está en tu pedido.'], celebra: ['img/tito-celebrando.webp', '¡Pedido enviado! Te respondemos por WhatsApp.'] };
+  window.tito = function(modo){
+    var p = POSES[modo]; if (!p || !tImg) return;
+    clearTimeout(tT); tImg.src = p[0]; globo(p[1]);
+    tImg.classList.remove('salta'); void tImg.offsetWidth; tImg.classList.add('salta');
+    tT = setTimeout(function(){ tImg.src = 'img/tito-saludando.webp'; tGlobo.classList.remove('ver'); }, 2800);
+  };
+  if (tImg) {
+    [ 'img/tito-pulgar.webp', 'img/tito-celebrando.webp' ].forEach(function(u){ var i = new Image(); i.src = u; });
+    /* saluda a los 3,5 s, pero solo cuando ya no está el aviso de cookies (en celular se taparían) */
+    if (leer('tito-cerrado') !== '1') setTimeout(function espera(){ if (document.querySelector('.galleta')) return setTimeout(espera, 1000); saluda(); }, 3500);
+    document.getElementById('tito-cerrar').addEventListener('click', function(){ tGlobo.classList.remove('ver'); guardarK('tito-cerrado', '1'); });
+    tImg.addEventListener('click', function(){ clearTimeout(tT); tImg.classList.remove('salta'); void tImg.offsetWidth; tImg.classList.add('salta'); saluda(); });
   }
 
   /* guirnalda de luces con los colores del abanico */
