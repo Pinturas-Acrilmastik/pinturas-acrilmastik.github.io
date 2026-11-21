@@ -578,7 +578,10 @@ body::before{background:#0a0a0a}
 @media (prefers-reduced-motion:reduce){.nieve{display:none}}
 .vin__foto img{max-height:230px;width:auto;object-fit:contain}
 /* ===== Tito el tucán ===== */
-.f-tito{--x:1%;--w:28%;--y:0%;--z:8;--d:.5s;filter:drop-shadow(0 0 1px rgba(255,255,255,.45)) drop-shadow(0 0 22px rgba(252,240,16,.22)) drop-shadow(0 12px 16px rgba(0,0,0,.6))}
+/* Tito volando por encima de las canecas (no las tapa) */
+.tito-vuela{position:absolute;z-index:9;left:2%;bottom:63%;width:30%;animation:subir .7s cubic-bezier(.2,.8,.2,1) both .5s}
+.tito-vuela img{display:block;width:100%;height:auto;filter:drop-shadow(0 0 1px rgba(255,255,255,.45)) drop-shadow(0 0 22px rgba(252,240,16,.22)) drop-shadow(0 18px 18px rgba(0,0,0,.55));animation:volar 3.2s ease-in-out infinite 1.2s}
+@keyframes volar{0%,100%{transform:translateY(0) rotate(-3deg)}50%{transform:translateY(-10px) rotate(3deg)}}
 .tito{position:fixed;z-index:56;right:calc(16px + env(safe-area-inset-right,0px));bottom:calc(66px + env(safe-area-inset-bottom,0px));display:flex;align-items:flex-end;gap:6px;pointer-events:none;transition:bottom .25s ease}
 body.con-barra .tito{bottom:calc(136px + env(safe-area-inset-bottom,0px))}
 .tito__img{width:70px;height:auto;margin-right:-6px;pointer-events:auto;cursor:pointer;filter:drop-shadow(0 0 1px rgba(255,255,255,.5)) drop-shadow(0 6px 10px rgba(0,0,0,.6));transform-origin:50% 100%;animation:titoEntra .6s cubic-bezier(.2,.8,.2,1) both 1.2s}
@@ -590,8 +593,8 @@ body.con-barra .tito{bottom:calc(136px + env(safe-area-inset-bottom,0px))}
 .tito__globo a{display:inline-block;margin-top:6px;font-family:var(--f-cond);font-weight:600;font-size:13px;letter-spacing:.06em;text-transform:uppercase;color:#141414;background:var(--amarillo);border:1.5px solid #141414;border-radius:999px;padding:4px 12px;text-decoration:none}
 .tito__globo a:empty{display:none}
 .tito__cerrar{position:absolute;top:6px;right:6px;width:24px;height:24px;border:0;border-radius:50%;background:transparent;color:#5b564d;font-size:14px;cursor:pointer}
-@media (max-width:640px){.f-tito{--x:12%;--w:26%}.tito{bottom:calc(60px + env(safe-area-inset-bottom,0px))}.tito__img{width:60px}.tito__globo{max-width:190px;font-size:13px;margin-bottom:40px}}
-@media (prefers-reduced-motion:reduce){.tito__img{animation:none}}
+@media (max-width:640px){.tito-vuela{left:0;width:30%}.tito{bottom:calc(60px + env(safe-area-inset-bottom,0px))}.tito__img{width:60px}.tito__globo{max-width:190px;font-size:13px;margin-bottom:40px}}
+@media (prefers-reduced-motion:reduce){.tito__img,.tito-vuela img{animation:none}}
 .vin__foto img.cambio{animation:fotoIn .35s ease}
 @keyframes fotoIn{from{opacity:0;transform:scale(.94)}}
 </style>
@@ -650,7 +653,7 @@ body.con-barra .tito{bottom:calc(136px + env(safe-area-inset-bottom,0px))}
           <img class="f f-g1" src="img/galon-t1.webp" alt="" width="520" height="595">
           <img class="f f-q1" src="img/cuarto.webp" alt="" width="368" height="620">
           <img class="f f-q2" src="img/cuarto.webp" alt="" width="368" height="620">
-          <img class="f f-tito" src="img/tito-pintando.webp" alt="Tito el tucán, con su rodillo, listo para pintar" width="473" height="560">
+          <span class="tito-vuela"><img src="img/tito-celebrando.webp" alt="Tito el tucán volando sobre la familia de envases" width="342" height="340"></span>
         </div>
       </div>
     </div>
