@@ -105,13 +105,15 @@ p{margin:0}
 .familia{position:absolute;inset:0;z-index:1}
 .familia__piso{position:absolute;left:4%;right:4%;bottom:0;height:12%;border-radius:50%;background:radial-gradient(closest-side,rgba(0,0,0,.75),transparent)}
 .f{position:absolute;height:auto;width:var(--w);left:calc(var(--x) - var(--w) / 2);bottom:var(--y);z-index:var(--z);filter:drop-shadow(0 14px 18px rgba(0,0,0,.55));animation:subir .7s cubic-bezier(.2,.8,.2,1) both;animation-delay:var(--d)}
-.f-c2{--x:27%;--w:35%;--y:17%;--z:1;--d:.05s}
-.f-c1{--x:56%;--w:40%;--y:14%;--z:3;--d:0s}
-.f-m1{--x:84%;--w:24%;--y:19%;--z:2;--d:.1s}
-.f-g2{--x:14%;--w:20%;--y:2%;--z:4;--d:.2s}
-.f-g1{--x:38%;--w:19%;--y:1%;--z:5;--d:.25s}
-.f-q{--x:63%;--w:10%;--y:2%;--z:5;--d:.3s}
-.f-m2{--x:84%;--w:17%;--y:1%;--z:4;--d:.35s}
+/* atrás: cuñetes; a los lados: medios (T2 junto al T2, T1 junto al T1); adelante: galones; al frente: los dos cuartos superpuestos */
+.f-m2{--x:13%;--w:21%;--y:19%;--z:1;--d:.15s}
+.f-m1{--x:87%;--w:21%;--y:19%;--z:1;--d:.15s}
+.f-c2{--x:37%;--w:33%;--y:22%;--z:2;--d:.05s}
+.f-c1{--x:64%;--w:34%;--y:22%;--z:3;--d:0s}
+.f-g2{--x:31%;--w:23%;--y:5%;--z:4;--d:.25s}
+.f-g1{--x:69%;--w:23%;--y:5%;--z:4;--d:.25s}
+.f-q1{--x:46%;--w:12%;--y:1%;--z:5;--d:.35s}
+.f-q2{--x:54%;--w:12%;--y:0%;--z:6;--d:.4s}
 @keyframes subir{from{opacity:0;transform:translateY(18px)}}
 .hero__sello{position:absolute;right:2%;top:6%;width:118px;height:118px;border-radius:50%;background:var(--tinta-relleno);color:var(--en-tinta-relleno);display:grid;place-items:center;text-align:center;transform:rotate(8deg);z-index:2}
 .hero__sello b{display:block;font-family:var(--f-display);font-weight:400;font-size:38px;line-height:1}
@@ -625,13 +627,14 @@ body::before{background:#0a0a0a}
         <div class="hero__sello" aria-label="Más de 10 años"><svg class="gorro" viewBox="0 0 80 60" aria-hidden="true"><path d="M8 48C14 22 34 6 58 8c8 1 12 10 10 22-6-6-12-8-18-6L20 50z" fill="#e8141b"/><path d="M58 8c8 1 12 10 10 22-3-3-6-5-9-6z" fill="#b30f15"/><rect x="2" y="42" width="40" height="13" rx="6.5" fill="#fff" transform="rotate(-18 22 48)"/><circle cx="68" cy="33" r="7" fill="#fff"/></svg><div><b>+10</b><span>años<br>en Ibagué</span></div></div>
         <div class="familia" role="img" aria-label="La familia de vinilos Acrilmastik: cuñetes Tipo 1 y Tipo 2, medios cuñetes, galones y cuarto">
           <span class="familia__piso" aria-hidden="true"></span>
-          <img class="f f-c2" src="img/cunete-t2.webp" alt="" width="505" height="620">
+          <img class="f f-m2" src="img/medio-t2.webp" alt="" width="406" height="620">
           <img class="f f-m1" src="img/medio-t1.webp" alt="" width="406" height="620">
-          <img class="f f-c1" src="img/cunete-t1.webp" alt="" width="495" height="620" fetchpriority="high">
+          <img class="f f-c2" src="img/cunete-t2.webp" alt="" width="494" height="620">
+          <img class="f f-c1" src="img/cunete-t1.webp" alt="" width="520" height="618" fetchpriority="high">
           <img class="f f-g2" src="img/galon-t2.webp" alt="" width="520" height="557">
           <img class="f f-g1" src="img/galon-t1.webp" alt="" width="520" height="595">
-          <img class="f f-q" src="img/cuarto.webp" alt="" width="368" height="620">
-          <img class="f f-m2" src="img/medio-t2.webp" alt="" width="406" height="620">
+          <img class="f f-q1" src="img/cuarto.webp" alt="" width="368" height="620">
+          <img class="f f-q2" src="img/cuarto.webp" alt="" width="368" height="620">
         </div>
       </div>
     </div>
