@@ -632,8 +632,16 @@ body.con-menu .tito{z-index:67} body.con-menu .wa-flot{z-index:66}
 .mp__desc{font-size:15px;color:var(--tinta-suave);line-height:1.5}
 .mp__colnom{color:var(--tinta);letter-spacing:.04em}
 .mp__colores{display:flex;flex-wrap:wrap;gap:8px}
-.mp__col{width:34px;height:34px;border-radius:50%;border:2px solid rgba(255,255,255,.18);background:var(--c);cursor:pointer;padding:0;box-shadow:inset 0 0 0 2px rgba(0,0,0,.25);transition:transform .15s ease}
+.mp__col{width:34px;height:34px;border-radius:50%;border:2px solid rgba(255,255,255,.18);background:radial-gradient(circle at 32% 28%,rgba(255,255,255,.6),rgba(255,255,255,0) 45%),var(--c);cursor:pointer;padding:0;box-shadow:inset 0 0 0 2px rgba(0,0,0,.25);transition:transform .15s ease}
 .mp__col:hover{transform:scale(1.1)}
+.mp__col.mate{background:var(--c)}
+.mp[hidden]{display:none}
+.menu__tit p{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+@media (max-width:560px){.menu .marcas button{flex:1 1 0;min-width:0;padding:10px 6px;font-size:14px;letter-spacing:.03em}}
+.marcas{display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;padding:2px}
+.marcas button{flex:1 0 auto;min-height:48px;padding:10px 22px;border-radius:999px;border:2px solid rgba(255,255,255,.2);background:transparent;color:var(--tinta);font-family:var(--f-cond);font-weight:600;font-size:16px;letter-spacing:.06em;text-transform:uppercase;cursor:pointer}
+.marcas button[aria-selected="true"]{background:var(--amarillo);color:#141414;border-color:var(--amarillo)}
+.marcas__t{font-family:var(--f-cond);font-weight:600;font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--tinta-suave);margin-bottom:-12px}
 .mp__col[aria-pressed="true"]{border-color:var(--amarillo);box-shadow:0 0 0 3px rgba(252,240,16,.35),inset 0 0 0 2px rgba(0,0,0,.25)}
 .mp__pres{display:grid;grid-template-columns:repeat(auto-fill,minmax(104px,1fr));gap:8px}
 .mp__total{display:flex;align-items:flex-end;justify-content:space-between;gap:12px;flex-wrap:wrap;padding-top:14px;border-top:1px dashed var(--linea-fuerte)}
@@ -1508,9 +1516,18 @@ body.con-barra .tito{bottom:calc(136px + env(safe-area-inset-bottom,0px))}
   var COL = {
     'Blanco':'#f7f6f1','Negro':'#161616','Rojo':'#c8102e','Amarillo':'#f5c400','Verde esmeralda':'#00875a','Azul oscuro':'#1b2f6b',
     'Tabaco':'#6b4226','Caoba':'#5a1f14','Rojo colonial':'#8b2a1e','Naranja':'#e86a10','Aluminio':'#a9abaf','Gold tonner':'#c9a54a',
-    'Crema':'#efe3c2','Gris':'#85888a','Verde':'#1e9e2a','Azul':'#1452a8'
+    'Crema':'#efe3c2','Gris':'#85888a','Verde':'#1e9e2a','Azul':'#1452a8',
+    'Blanco brillante':'#f7f6f1','Blanco mate':'#ebe9e3','Negro brillante':'#161616','Negro mate':'#262626','Verde primaveral':'#5fb336',
+    'Azul español':'#1c4fa0','Tabaco claro':'#8a5a35','Ocre':'#c98b2b'
   };
-  var ESM_COL = ['Rojo','Amarillo','Verde esmeralda','Azul oscuro','Tabaco','Caoba','Rojo colonial','Naranja','Aluminio','Gold tonner','Crema','Gris','Blanco','Negro'];
+  /* Esmaltes: mismos 16 colores en las 3 marcas (si una marca no tiene un color, quítalo de su lista) */
+  var ESM_COL = ['Blanco brillante','Blanco mate','Negro brillante','Negro mate','Rojo','Amarillo','Verde esmeralda','Verde primaveral','Azul español','Rojo colonial','Tabaco claro','Caoba','Naranja','Gris','Aluminio','Ocre'];
+  function esmalte(id, marca){
+    return { id:id, marca:marca, nombre:'Esmalte ' + marca, uso:'Pintura en aceite · Puertas, ventanas, rejas, metal y madera',
+      desc:'Esmalte ' + marca + ' en cuarto y galón, en ' + ESM_COL.length + ' colores brillantes y mates.',
+      pres:[['Cuarto','1/4 galón',27000],['Galón','1 galón',85000]], def:1, colores:ESM_COL.slice(), forma:'galon', etiqueta:marca.toUpperCase(),
+      fotos:{} /* ej.: 'Galón':'img/esm-pintuco-galon.webp', o por color: 'Galón|Rojo':'img/...' */ };
+  }
   var CATS = [
     { id:'vinilos', nombre:'Pinturas en blanco', sub:'Vinilos Tipo 1 y Tipo 2', desc:'Del cuarto al cuñete. Fabricados por nosotros.', forma:'balde', color:'Blanco', portada:'img/cunete-t1.webp',
       nota:'Precios en color blanco. ¿Lo quieres en otro color? Cotízalo en la carta de colores.', guia:true,
@@ -1522,13 +1539,10 @@ body.con-barra .tito{bottom:calc(136px + env(safe-area-inset-bottom,0px))}
           pres:[['Cuarto','1/4 galón',12000],['Galón','1 galón',40000],['Medio cuñete','2,5 galones',85000],['Cuñete','5 galones',160000]], def:3, colores:['Blanco'], forma:'balde',
           fotos:{ 'Cuarto':'img/cuarto.webp','Galón':'img/galon-t2.webp','Medio cuñete':'img/medio-t2.webp','Cuñete':'img/cunete-t2.webp' } }
       ] },
-    { id:'esmaltes', nombre:'Esmaltes', sub:'Pintura en aceite', desc:'Para puertas, ventanas, rejas, metal y madera.', forma:'galon', color:'Rojo',
+    { id:'esmaltes', nombre:'Esmaltes', sub:'Prolacol · Surticolor · Pintuco', desc:'Pintura en aceite para puertas, ventanas, rejas, metal y madera.', forma:'galon', color:'Rojo', marcas:true,
       nota:'Los colores en pantalla son aproximados. Mira la muestra en el punto antes de comprar.',
       productos:[
-        { id:'esb', nombre:'Esmalte brillante', uso:'Puertas, ventanas, metal y madera', desc:'Acabado en aceite brillante que le da vida y protege puertas, ventanas, rejas y marcos.',
-          pres:[['Galón','1 galón',85000],['Cuarto','1/4 galón',27000]], colores:ESM_COL, forma:'galon' },
-        { id:'esm', nombre:'Esmalte mate', uso:'Puertas, ventanas, metal y madera', desc:'El mismo esmalte en acabado mate, sin brillo, para un look sobrio y elegante.',
-          pres:[['Galón','1 galón',85000],['Cuarto','1/4 galón',27000]], colores:['Blanco','Negro'], forma:'galon' }
+        esmalte('epr', 'Prolacol'), esmalte('esu', 'Surticolor'), esmalte('epi', 'Pintuco')
       ] },
     { id:'anticorrosivos', nombre:'Anticorrosivos', sub:'Protección para metal', desc:'La base que protege rejas y estructuras antes de pintar.', forma:'galon', color:'Gris',
       productos:[
@@ -1561,9 +1575,9 @@ body.con-barra .tito{bottom:calc(136px + env(safe-area-inset-bottom,0px))}
   ];
 
   /* envase dibujado (mientras llegan las fotos reales) */
-  function envase(forma, hex){
+  function envase(forma, hex, etiqueta){
     var c = hex || '#f7f6f1', o = 'rgba(0,0,0,.18)';
-    var lab = '<rect x="58" y="96" width="84" height="40" rx="4" fill="#fff"/><rect x="58" y="96" width="84" height="9" fill="#fcf010"/><text x="100" y="126" text-anchor="middle" font-family="Alfa Slab One,Georgia,serif" font-size="9.5" fill="#141414">ACRILMASTIK</text>';
+    var lab = '<rect x="58" y="96" width="84" height="40" rx="4" fill="#fff"/><rect x="58" y="96" width="84" height="9" fill="#fcf010"/><text x="100" y="126" text-anchor="middle" font-family="Alfa Slab One,Georgia,serif" font-size="9.5" fill="#141414">' + (etiqueta || 'ACRILMASTIK') + '</text>';
     var f = {
       balde: '<path d="M44 44 Q100 -6 156 44" fill="none" stroke="#e6e6e6" stroke-width="5"/><path d="M40 52h120l-10 118a10 10 0 0 1-10 9H60a10 10 0 0 1-10-9z" fill="#f4f4f2"/><rect x="34" y="40" width="132" height="18" rx="6" fill="'+c+'" stroke="'+o+'"/><rect x="46" y="66" width="108" height="22" rx="3" fill="'+c+'" stroke="'+o+'"/>' + lab,
       galon: '<path d="M62 30 Q100 2 138 30" fill="none" stroke="#9a9a9a" stroke-width="5"/><rect x="48" y="34" width="104" height="142" rx="10" fill="#d8d9db"/><rect x="48" y="34" width="104" height="14" rx="6" fill="#b9babd"/><rect x="48" y="58" width="104" height="30" fill="'+c+'" stroke="'+o+'"/>' + lab + '<rect x="48" y="146" width="104" height="18" fill="'+c+'" stroke="'+o+'"/>',
@@ -1597,7 +1611,7 @@ body.con-barra .tito{bottom:calc(136px + env(safe-area-inset-bottom,0px))}
       '<div class="mp__cuerpo">' +
         '<p class="prod__uso">'+p.uso+'</p><h3>'+p.nombre+'</h3><p class="mp__desc">'+p.desc+'</p>' +
         (p.colores && p.colores.length > 1 ? '<p class="vin__pres-t">Color <span class="mp__colnom"></span></p><div class="mp__colores" role="group" aria-label="Color">' +
-          p.colores.map(function(c, i){ return '<button type="button" class="mp__col" data-i="'+i+'" style="--c:'+COL[c]+'" aria-label="'+c+'" title="'+c+'"></button>'; }).join('') + '</div>' : '') +
+          p.colores.map(function(c, i){ return '<button type="button" class="mp__col'+(/mate$/i.test(c) ? ' mate' : '')+'" data-i="'+i+'" style="--c:'+COL[c]+'" aria-label="'+c+'" title="'+c+'"></button>'; }).join('') + '</div>' : '') +
         (p.pres.length > 1 ? '<p class="vin__pres-t">'+etq+'</p><div class="mp__pres" role="group" aria-label="'+etq+'">' +
           p.pres.map(function(x, i){ return '<button type="button" class="pres" data-i="'+i+'"><b>'+x[0]+'</b>'+(x[1] ? '<small>'+x[1]+'</small>' : '')+'</button>'; }).join('') + '</div>' : '') +
         '<div class="mp__total"><div><p class="vin__precio"><small class="mp__lbl"></small><span class="mp__valor"></span></p></div>' +
@@ -1609,7 +1623,7 @@ body.con-barra .tito{bottom:calc(136px + env(safe-area-inset-bottom,0px))}
       var foto = (p.fotos && (p.fotos[x[0] + '|' + color] || p.fotos[x[0]])) || null;
       var img = el.querySelector('.mp__img');
       img.setAttribute('data-tam', /^(Cuarto|Media botella)/.test(x[0]) ? 's' : (/^(Galón|Botella|Medio)/.test(x[0]) ? 'm' : 'l'));
-      var nuevo = foto ? '<img src="'+foto+'" alt="'+p.nombre+' '+x[0].toLowerCase()+'">' : envase(p.forma, COL[color] || COL[p.base]);
+      var nuevo = foto ? '<img src="'+foto+'" alt="'+p.nombre+' '+x[0].toLowerCase()+'">' : envase(p.forma, COL[color] || COL[p.base], p.etiqueta);
       if (img.getAttribute('data-k') !== (foto || p.forma + color)) { img.innerHTML = nuevo; img.setAttribute('data-k', foto || p.forma + color); img.classList.remove('cambio'); void img.offsetWidth; img.classList.add('cambio'); }
       el.querySelector('.mp__chip').textContent = color && p.colores ? color : '';
       el.querySelectorAll('.mp__col').forEach(function(b){ b.setAttribute('aria-pressed', String(+b.getAttribute('data-i') === st.color)); });
@@ -1643,7 +1657,17 @@ body.con-barra .tito{bottom:calc(136px + env(safe-area-inset-bottom,0px))}
       menuCuerpo.innerHTML = '';
       document.getElementById('menu-t').textContent = cat.nombre;
       document.getElementById('menu-sub').textContent = cat.sub;
-      cat.productos.forEach(function(p){ menuCuerpo.appendChild(tarjetaProducto(cat, p)); });
+      var tarjetas = cat.productos.map(function(p){ var t = tarjetaProducto(cat, p); menuCuerpo.appendChild(t); return t; });
+      if (cat.marcas) {
+        var tt = document.createElement('p'); tt.className = 'marcas__t'; tt.textContent = 'Escoge la marca';
+        var tabs = document.createElement('div'); tabs.className = 'marcas'; tabs.setAttribute('role', 'tablist'); tabs.setAttribute('aria-label', 'Marca');
+        cat.productos.forEach(function(p, i){
+          var b = document.createElement('button'); b.type = 'button'; b.setAttribute('role', 'tab'); b.textContent = p.marca;
+          b.addEventListener('click', function(){ verMarca(i); }); tabs.appendChild(b);
+        });
+        function verMarca(i){ tarjetas.forEach(function(t, j){ t.hidden = j !== i; }); [].forEach.call(tabs.children, function(b, j){ b.setAttribute('aria-selected', String(j === i)); }); }
+        menuCuerpo.insertBefore(tabs, tarjetas[0]); menuCuerpo.insertBefore(tt, tabs); verMarca(0);
+      }
       if (cat.nota) { var n = document.createElement('p'); n.className = 'menu__nota'; n.innerHTML = cat.nota.replace('carta de colores', '<a href="#colores">carta de colores</a>'); menuCuerpo.appendChild(n); }
       if (cat.guia && guiaHTML) { var g = document.createElement('div'); g.className = 'vin-guia'; g.innerHTML = guiaHTML; menuCuerpo.appendChild(g); }
       var otras = document.createElement('nav'); otras.className = 'menu__otras'; otras.setAttribute('aria-label', 'Otras categorías');
