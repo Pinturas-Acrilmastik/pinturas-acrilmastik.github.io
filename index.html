@@ -634,9 +634,12 @@ body.con-menu .tito{z-index:67} body.con-menu .wa-flot{z-index:66}
 .mp__desc{font-size:15px;color:var(--tinta-suave);line-height:1.5}
 .mp__colnom{color:var(--tinta);letter-spacing:.04em}
 .mp__colores{display:flex;flex-wrap:wrap;gap:8px}
-.mp__col{width:34px;height:34px;border-radius:50%;border:2px solid rgba(255,255,255,.18);background:radial-gradient(circle at 32% 28%,rgba(255,255,255,.6),rgba(255,255,255,0) 45%),var(--c);cursor:pointer;padding:0;box-shadow:inset 0 0 0 2px rgba(0,0,0,.25);transition:transform .15s ease}
+.mp__col{width:34px;height:34px;border-radius:50%;border:2px solid rgba(255,255,255,.18);background:linear-gradient(160deg,rgba(255,255,255,.28) 0%,rgba(255,255,255,0) 38%,rgba(0,0,0,.12) 100%),var(--c);cursor:pointer;padding:0;box-shadow:inset 0 0 0 2px rgba(0,0,0,.25);transition:transform .15s ease}
 .mp__col:hover{transform:scale(1.1)}
 .mp__col.mate{background:var(--c)}
+.mp__col[title="Aluminio"]{background:linear-gradient(135deg,#d9dbdd 0%,#9da1a5 45%,#c9ccce 60%,#8d9195 100%)}
+.mp__chip{display:inline-flex;align-items:center;gap:6px}
+.mp__chip i{width:12px;height:12px;border-radius:50%;background:var(--c);box-shadow:inset 0 0 0 1px rgba(0,0,0,.25)}
 .mp[hidden]{display:none}
 .menu__tit p{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 @media (max-width:560px){.menu .marcas button{flex:1 1 0;min-width:0;padding:10px 6px;font-size:14px;letter-spacing:.03em}}
@@ -1519,16 +1522,20 @@ body.con-barra .tito{bottom:calc(136px + env(safe-area-inset-bottom,0px))}
     'Blanco':'#f7f6f1','Negro':'#161616','Rojo':'#c8102e','Amarillo':'#f5c400','Verde esmeralda':'#00875a','Azul oscuro':'#1b2f6b',
     'Tabaco':'#6b4226','Caoba':'#5a1f14','Rojo colonial':'#8b2a1e','Naranja':'#e86a10','Aluminio':'#a9abaf','Gold tonner':'#c9a54a',
     'Crema':'#efe3c2','Gris':'#85888a','Verde':'#1e9e2a','Azul':'#1452a8',
-    'Blanco brillante':'#f7f6f1','Blanco mate':'#ebe9e3','Negro brillante':'#161616','Negro mate':'#262626','Verde primaveral':'#5fb336',
-    'Azul español':'#1c4fa0','Tabaco claro':'#8a5a35','Ocre':'#c98b2b'
+    'Blanco brillante':'#f4f3ee','Blanco mate':'#e9e7e1','Negro brillante':'#141414','Negro mate':'#232323','Verde primaveral':'#4f8f2f',
+    'Azul español':'#234c8a','Tabaco claro':'#7f5733','Ocre':'#b98a32'
   };
+  /* tonos para los esmaltes (más sobrios que los de la carta de vinilos) */
+  var COL_ESM = { 'Rojo':'#ad1a1f','Amarillo':'#e8b40e','Verde esmeralda':'#0f6a40','Rojo colonial':'#76281f','Caoba':'#4a2016','Naranja':'#d8611c','Gris':'#7b7e80','Aluminio':'#b3b6b9' };
+  Object.keys(COL_ESM).forEach(function(k){ COL['esm:' + k] = COL_ESM[k]; });
+  function hexDe(p, c){ return (p.paleta && COL[p.paleta + ':' + c]) || COL[c]; }
   /* Esmaltes: mismos 16 colores en las 3 marcas (si una marca no tiene un color, quítalo de su lista) */
   var ESM_COL = ['Blanco brillante','Blanco mate','Negro brillante','Negro mate','Rojo','Amarillo','Verde esmeralda','Verde primaveral','Azul español','Rojo colonial','Tabaco claro','Caoba','Naranja','Gris','Aluminio','Ocre'];
-  function esmalte(id, marca, fotos){
-    return { id:id, marca:marca, nombre:'Esmalte ' + marca, uso:'Pintura en aceite · Puertas, ventanas, rejas, metal y madera',
-      desc:'Esmalte ' + marca + ' en cuarto y galón, en ' + ESM_COL.length + ' colores brillantes y mates.',
-      pres:[['Cuarto','1/4 galón',27000],['Galón','1 galón',85000]], def:1, colores:ESM_COL.slice(), forma:'galon', etiqueta:marca.toUpperCase(),
-      fotos: fotos || {} /* foto de referencia por presentación (la misma para todos los colores) */ };
+  function esmalte(id, marca, fotos, cuarto, galon, nombre){
+    return { id:id, marca:marca, nombre: nombre || ('Esmalte ' + marca), uso:'Pintura en aceite · Puertas, ventanas, rejas, metal y madera',
+      desc:(nombre || 'Esmalte ' + marca) + ' en cuarto y galón, en ' + ESM_COL.length + ' colores brillantes y mates.',
+      pres:[['Cuarto','1/4 galón',cuarto],['Galón','1 galón',galon]], def:1, colores:ESM_COL.slice(), forma:'galon', etiqueta:marca.toUpperCase(),
+      fotos: fotos || {} /* foto de referencia por presentación (la misma para todos los colores) */, paleta:'esm' };
   }
   var CATS = [
     { id:'vinilos', nombre:'Pinturas en blanco', sub:'Vinilos Tipo 1 y Tipo 2', desc:'Del cuarto al cuñete. Fabricados por nosotros.', forma:'balde', color:'Blanco', portada:'img/cunete-t1.webp',
@@ -1544,9 +1551,10 @@ body.con-barra .tito{bottom:calc(136px + env(safe-area-inset-bottom,0px))}
     { id:'esmaltes', nombre:'Esmaltes', sub:'Prolacol · Surticolor · Pintuco', desc:'Pintura en aceite para puertas, ventanas, rejas, metal y madera.', forma:'galon', color:'Rojo', marcas:true, portada:'img/esm-prolacol-galon.webp',
       nota:'Los colores en pantalla son aproximados. Mira la muestra en el punto antes de comprar.',
       productos:[
-        esmalte('epr', 'Prolacol', { 'Galón':'img/esm-prolacol-galon.webp', 'Cuarto':'img/esm-prolacol-cuarto.webp' }),
-        esmalte('esu', 'Surticolor', { 'Galón':'img/esm-surticolor-galon.webp', 'Cuarto':'img/esm-surticolor-cuarto.webp' }),
-        esmalte('epi', 'Pintuco', { 'Galón':'img/esm-pintuco-galon.webp', 'Cuarto':'img/esm-pintuco-cuarto.webp' })
+        /* precios por marca (todos los colores igual): cuarto, galón */
+        esmalte('epr', 'Prolacol', { 'Galón':'img/esm-prolacol-galon.webp', 'Cuarto':'img/esm-prolacol-cuarto.webp' }, 27000, 80000),
+        esmalte('esu', 'Surticolor', { 'Galón':'img/esm-surticolor-galon.webp', 'Cuarto':'img/esm-surticolor-cuarto.webp' }, 25000, 80000),
+        esmalte('epi', 'Pintuco', { 'Galón':'img/esm-pintuco-galon.webp', 'Cuarto':'img/esm-pintuco-cuarto.webp' }, 32000, 110000, 'Esmalte Doméstico Pintuco')
       ] },
     { id:'anticorrosivos', nombre:'Anticorrosivos', sub:'Protección para metal', desc:'La base que protege rejas y estructuras antes de pintar.', forma:'galon', color:'Gris',
       productos:[
@@ -1615,7 +1623,7 @@ body.con-barra .tito{bottom:calc(136px + env(safe-area-inset-bottom,0px))}
       '<div class="mp__cuerpo">' +
         '<p class="prod__uso">'+p.uso+'</p><h3>'+p.nombre+'</h3><p class="mp__desc">'+p.desc+'</p>' +
         (p.colores && p.colores.length > 1 ? '<p class="vin__pres-t">Color <span class="mp__colnom"></span></p><div class="mp__colores" role="group" aria-label="Color">' +
-          p.colores.map(function(c, i){ return '<button type="button" class="mp__col'+(/mate$/i.test(c) ? ' mate' : '')+'" data-i="'+i+'" style="--c:'+COL[c]+'" aria-label="'+c+'" title="'+c+'"></button>'; }).join('') + '</div>' : '') +
+          p.colores.map(function(c, i){ return '<button type="button" class="mp__col'+(/mate$/i.test(c) ? ' mate' : '')+'" data-i="'+i+'" style="--c:'+hexDe(p, c)+'" aria-label="'+c+'" title="'+c+'"></button>'; }).join('') + '</div>' : '') +
         (p.pres.length > 1 ? '<p class="vin__pres-t">'+etq+'</p><div class="mp__pres" role="group" aria-label="'+etq+'">' +
           p.pres.map(function(x, i){ return '<button type="button" class="pres" data-i="'+i+'"><b>'+x[0]+'</b>'+(x[1] ? '<small>'+x[1]+'</small>' : '')+'</button>'; }).join('') + '</div>' : '') +
         '<div class="mp__total"><div><p class="vin__precio"><small class="mp__lbl"></small><span class="mp__valor"></span></p></div>' +
@@ -1627,9 +1635,9 @@ body.con-barra .tito{bottom:calc(136px + env(safe-area-inset-bottom,0px))}
       var foto = (p.fotos && (p.fotos[x[0] + '|' + color] || p.fotos[x[0]])) || null;
       var img = el.querySelector('.mp__img');
       img.setAttribute('data-tam', /^(Cuarto|Media botella)/.test(x[0]) ? 's' : (/^(Galón|Botella|Medio)/.test(x[0]) ? 'm' : 'l'));
-      var nuevo = foto ? '<img src="'+foto+'" alt="'+p.nombre+' '+x[0].toLowerCase()+'">' : envase(p.forma, COL[color] || COL[p.base], p.etiqueta);
+      var nuevo = foto ? '<img src="'+foto+'" alt="'+p.nombre+' '+x[0].toLowerCase()+'">' : envase(p.forma, hexDe(p, color) || COL[p.base], p.etiqueta);
       if (img.getAttribute('data-k') !== (foto || p.forma + color)) { img.innerHTML = nuevo; img.setAttribute('data-k', foto || p.forma + color); img.classList.remove('cambio'); void img.offsetWidth; img.classList.add('cambio'); }
-      el.querySelector('.mp__chip').textContent = color && p.colores ? color : '';
+      var chip = el.querySelector('.mp__chip'); chip.innerHTML = color && p.colores && p.colores.length > 1 ? '<i style="--c:' + hexDe(p, color) + '"></i>' + color : (color && p.colores ? color : '');
       el.querySelectorAll('.mp__col').forEach(function(b){ b.setAttribute('aria-pressed', String(+b.getAttribute('data-i') === st.color)); });
       el.querySelectorAll('.mp__pres .pres').forEach(function(b){ b.setAttribute('aria-pressed', String(+b.getAttribute('data-i') === st.pres)); });
       var cn = el.querySelector('.mp__colnom'); if (cn) cn.textContent = '· ' + color;
