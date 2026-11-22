@@ -623,6 +623,8 @@ body.con-menu .tito{z-index:67} body.con-menu .wa-flot{z-index:66}
 .mp__img img,.mp__img .env{max-width:80%;max-height:300px;width:auto;height:auto;object-fit:contain;filter:drop-shadow(0 16px 18px rgba(0,0,0,.6))}
 .mp__img .env{width:72%;height:auto;transition:width .3s ease}
 .mp__img[data-tam="m"] .env{width:60%} .mp__img[data-tam="s"] .env{width:44%}
+.mp__img img{transition:max-height .3s ease} .mp__img[data-tam="s"] img{max-height:230px}
+@media (max-width:760px){.mp__img[data-tam="s"] img{max-height:170px}}
 @media (max-width:760px){.mp__img img,.mp__img .env{max-height:220px}}
 .mp__img.cambio > *{animation:fotoIn .35s ease}
 .mp__chip{position:absolute;left:14px;bottom:14px;background:rgba(255,255,255,.92);color:#141414;border-radius:999px;padding:3px 12px;font-family:var(--f-cond);font-weight:600;font-size:13px;letter-spacing:.04em}
@@ -1522,11 +1524,11 @@ body.con-barra .tito{bottom:calc(136px + env(safe-area-inset-bottom,0px))}
   };
   /* Esmaltes: mismos 16 colores en las 3 marcas (si una marca no tiene un color, quítalo de su lista) */
   var ESM_COL = ['Blanco brillante','Blanco mate','Negro brillante','Negro mate','Rojo','Amarillo','Verde esmeralda','Verde primaveral','Azul español','Rojo colonial','Tabaco claro','Caoba','Naranja','Gris','Aluminio','Ocre'];
-  function esmalte(id, marca){
+  function esmalte(id, marca, fotos){
     return { id:id, marca:marca, nombre:'Esmalte ' + marca, uso:'Pintura en aceite · Puertas, ventanas, rejas, metal y madera',
       desc:'Esmalte ' + marca + ' en cuarto y galón, en ' + ESM_COL.length + ' colores brillantes y mates.',
       pres:[['Cuarto','1/4 galón',27000],['Galón','1 galón',85000]], def:1, colores:ESM_COL.slice(), forma:'galon', etiqueta:marca.toUpperCase(),
-      fotos:{} /* ej.: 'Galón':'img/esm-pintuco-galon.webp', o por color: 'Galón|Rojo':'img/...' */ };
+      fotos: fotos || {} /* foto de referencia por presentación (la misma para todos los colores) */ };
   }
   var CATS = [
     { id:'vinilos', nombre:'Pinturas en blanco', sub:'Vinilos Tipo 1 y Tipo 2', desc:'Del cuarto al cuñete. Fabricados por nosotros.', forma:'balde', color:'Blanco', portada:'img/cunete-t1.webp',
@@ -1539,10 +1541,12 @@ body.con-barra .tito{bottom:calc(136px + env(safe-area-inset-bottom,0px))}
           pres:[['Cuarto','1/4 galón',12000],['Galón','1 galón',40000],['Medio cuñete','2,5 galones',85000],['Cuñete','5 galones',160000]], def:3, colores:['Blanco'], forma:'balde',
           fotos:{ 'Cuarto':'img/cuarto.webp','Galón':'img/galon-t2.webp','Medio cuñete':'img/medio-t2.webp','Cuñete':'img/cunete-t2.webp' } }
       ] },
-    { id:'esmaltes', nombre:'Esmaltes', sub:'Prolacol · Surticolor · Pintuco', desc:'Pintura en aceite para puertas, ventanas, rejas, metal y madera.', forma:'galon', color:'Rojo', marcas:true,
+    { id:'esmaltes', nombre:'Esmaltes', sub:'Prolacol · Surticolor · Pintuco', desc:'Pintura en aceite para puertas, ventanas, rejas, metal y madera.', forma:'galon', color:'Rojo', marcas:true, portada:'img/esm-prolacol-galon.webp',
       nota:'Los colores en pantalla son aproximados. Mira la muestra en el punto antes de comprar.',
       productos:[
-        esmalte('epr', 'Prolacol'), esmalte('esu', 'Surticolor'), esmalte('epi', 'Pintuco')
+        esmalte('epr', 'Prolacol', { 'Galón':'img/esm-prolacol-galon.webp', 'Cuarto':'img/esm-prolacol-cuarto.webp' }),
+        esmalte('esu', 'Surticolor', { 'Galón':'img/esm-surticolor-galon.webp', 'Cuarto':'img/esm-surticolor-cuarto.webp' }),
+        esmalte('epi', 'Pintuco')
       ] },
     { id:'anticorrosivos', nombre:'Anticorrosivos', sub:'Protección para metal', desc:'La base que protege rejas y estructuras antes de pintar.', forma:'galon', color:'Gris',
       productos:[
