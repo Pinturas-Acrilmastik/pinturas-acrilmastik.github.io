@@ -582,6 +582,7 @@ body::before{background:#0a0a0a}
 .cat .sec__cab{margin-bottom:28px}
 .cat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
 @media (max-width:900px){.cat-grid{grid-template-columns:repeat(2,1fr);gap:12px}}
+@media (max-width:900px){.cat-grid > .cat-card:last-child:nth-child(odd){grid-column:1 / -1}.cat-grid > .cat-card:last-child:nth-child(odd) .cat-card__arte{aspect-ratio:auto;height:clamp(150px,34vw,240px)}}
 .cat-card{position:relative;display:flex;flex-direction:column;border-radius:var(--radio-l);overflow:hidden;text-decoration:none;color:var(--tinta);background:#141414;border:1px solid rgba(255,255,255,.08);transition:transform .25s ease,border-color .25s ease,box-shadow .25s ease}
 .cat-card:hover{transform:translateY(-4px);border-color:rgba(252,240,16,.55);box-shadow:0 18px 40px -18px rgba(252,240,16,.35)}
 .cat-card__arte{position:relative;aspect-ratio:4/3;display:grid;place-items:center;padding:18px;background:radial-gradient(70% 80% at 50% 70%,var(--g,rgba(252,240,16,.16)),transparent 70%),#101010;overflow:hidden}
@@ -1581,6 +1582,7 @@ body.con-barra .tito{bottom:calc(136px + env(safe-area-inset-bottom,0px))}
           pres:[['Galón','1 galón',115000]], colores:['Amarillo','Verde','Azul','Rojo','Blanco','Gris','Negro'], forma:'galon', etiqueta:'SURTICOLOR', paleta:'tra',
           fotos:{ 'Galón':'img/tra-surticolor-galon.webp' } }
       ] },
+    /* Estuco plástico: por ahora solo en el punto físico (nov 2026). Para volver a mostrarlo, quita este comentario.
     { id:'estuco', nombre:'Estuco plástico', sub:'Resanar y alisar', desc:'Deja la pared lisa y lista para pintar.', forma:'balde', color:'Crema',
       productos:[
         { id:'esa', nombre:'Estuco plástico Acrilmastik', uso:'Interior y exterior', desc:'Nuestro estuco para resanar y dejar la pared lisa y lista para pintar.',
@@ -1588,6 +1590,7 @@ body.con-barra .tito{bottom:calc(136px + env(safe-area-inset-bottom,0px))}
         { id:'esc', nombre:'Estuco plástico Corona', uso:'Interior y exterior', desc:'También manejamos estuco plástico Corona.',
           pres:[['Caneca','',70000]], forma:'balde', base:'Crema' }
       ] },
+    */
     { id:'varios', nombre:'Varios', sub:'Brochas, rodillos y más', desc:'Todo lo que necesitas para aplicar.', forma:'brocha', color:'Amarillo',
       productos:[
         { id:'bro', nombre:'Brochas', uso:'Herramientas', desc:'Brochas para esmaltes, vinilos y retoques, de 1" a 5".',
