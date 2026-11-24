@@ -1537,6 +1537,15 @@ body.con-barra .tito{bottom:calc(136px + env(safe-area-inset-bottom,0px))}
       pres:[['Cuarto','1/4 galón',cuarto],['Galón','1 galón',galon]], def:1, colores:ESM_COL.slice(), forma:'galon', etiqueta:marca.toUpperCase(),
       fotos: fotos || {} /* foto de referencia por presentación (la misma para todos los colores) */, paleta:'esm' };
   }
+  /* Anticorrosivos: blanco, negro y gris, acabado mate */
+  var ANT_COL = ['Blanco','Negro','Gris'];
+  COL['ant:Blanco'] = '#e6e4de'; COL['ant:Negro'] = '#242424'; COL['ant:Gris'] = '#86898a';
+  function anticorrosivo(id, marca, fotos, cuarto, galon){
+    return { id:id, marca:marca, nombre:'Anticorrosivo ' + marca, uso:'Acabado mate · Protege rejas, puertas metálicas y estructuras',
+      desc:'Base que protege el metal del óxido. Viene en blanco, negro y gris, en acabado mate. Recomendado antes del esmalte.',
+      pres:[['Cuarto','1/4 galón',cuarto],['Galón','1 galón',galon]], def:1, colores:ANT_COL.slice(), forma:'galon', etiqueta:marca.toUpperCase(),
+      fotos: fotos || {}, paleta:'ant', mate:true };
+  }
   var CATS = [
     { id:'vinilos', nombre:'Pinturas en blanco', sub:'Vinilos Tipo 1 y Tipo 2', desc:'Del cuarto al cuñete. Fabricados por nosotros.', forma:'balde', color:'Blanco', portada:'img/cunete-t1.webp',
       nota:'Precios en color blanco. ¿Lo quieres en otro color? Cotízalo en la carta de colores.', guia:true,
@@ -1556,10 +1565,12 @@ body.con-barra .tito{bottom:calc(136px + env(safe-area-inset-bottom,0px))}
         esmalte('esu', 'Surticolor', { 'Galón':'img/esm-surticolor-galon.webp', 'Cuarto':'img/esm-surticolor-cuarto.webp' }, 25000, 80000),
         esmalte('epi', 'Pintuco', { 'Galón':'img/esm-pintuco-galon.webp', 'Cuarto':'img/esm-pintuco-cuarto.webp' }, 32000, 110000, 'Esmalte Doméstico Pintuco')
       ] },
-    { id:'anticorrosivos', nombre:'Anticorrosivos', sub:'Protección para metal', desc:'La base que protege rejas y estructuras antes de pintar.', forma:'galon', color:'Gris',
+    { id:'anticorrosivos', nombre:'Anticorrosivos', sub:'Prolacol · Surticolor', desc:'La base que protege rejas y estructuras del óxido antes de pintar.', forma:'galon', color:'Gris', marcas:true, portada:'img/ant-surticolor-galon.webp',
+      nota:'Los anticorrosivos son de acabado mate: protegen el metal del óxido. Si quieres brillo, aplica encima un esmalte. Los colores en pantalla son aproximados.',
       productos:[
-        { id:'ant', nombre:'Anticorrosivo', uso:'Metal', desc:'Base para proteger rejas, puertas metálicas y estructuras del óxido antes de aplicar el esmalte.',
-          pres:[['Galón','1 galón',75000],['Cuarto','1/4 galón',25000]], colores:['Blanco','Negro'], forma:'galon' }
+        /* precios por marca (todos los colores igual): cuarto, galón */
+        anticorrosivo('apr', 'Prolacol', { 'Galón':'img/esm-prolacol-galon.webp', 'Cuarto':'img/esm-prolacol-cuarto.webp' }, 27000, 80000),
+        anticorrosivo('asu', 'Surticolor', { 'Galón':'img/ant-surticolor-galon.webp', 'Cuarto':'img/ant-surticolor-cuarto.webp' }, 25000, 80000)
       ] },
     { id:'trafico', nombre:'Pintura de tráfico', sub:'Pisos y demarcación', desc:'Para pisos de cemento, parqueaderos y canchas.', forma:'galon', color:'Amarillo',
       productos:[
@@ -1623,7 +1634,7 @@ body.con-barra .tito{bottom:calc(136px + env(safe-area-inset-bottom,0px))}
       '<div class="mp__cuerpo">' +
         '<p class="prod__uso">'+p.uso+'</p><h3>'+p.nombre+'</h3><p class="mp__desc">'+p.desc+'</p>' +
         (p.colores && p.colores.length > 1 ? '<p class="vin__pres-t">Color <span class="mp__colnom"></span></p><div class="mp__colores" role="group" aria-label="Color">' +
-          p.colores.map(function(c, i){ return '<button type="button" class="mp__col'+(/mate$/i.test(c) ? ' mate' : '')+'" data-i="'+i+'" style="--c:'+hexDe(p, c)+'" aria-label="'+c+'" title="'+c+'"></button>'; }).join('') + '</div>' : '') +
+          p.colores.map(function(c, i){ return '<button type="button" class="mp__col'+((p.mate || /mate$/i.test(c)) ? ' mate' : '')+'" data-i="'+i+'" style="--c:'+hexDe(p, c)+'" aria-label="'+c+'" title="'+c+'"></button>'; }).join('') + '</div>' : '') +
         (p.pres.length > 1 ? '<p class="vin__pres-t">'+etq+'</p><div class="mp__pres" role="group" aria-label="'+etq+'">' +
           p.pres.map(function(x, i){ return '<button type="button" class="pres" data-i="'+i+'"><b>'+x[0]+'</b>'+(x[1] ? '<small>'+x[1]+'</small>' : '')+'</button>'; }).join('') + '</div>' : '') +
         '<div class="mp__total"><div><p class="vin__precio"><small class="mp__lbl"></small><span class="mp__valor"></span></p></div>' +
