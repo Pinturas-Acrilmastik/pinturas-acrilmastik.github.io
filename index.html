@@ -1540,6 +1540,8 @@ body.con-barra .tito{bottom:calc(136px + env(safe-area-inset-bottom,0px))}
   /* Anticorrosivos: blanco, negro y gris, acabado mate */
   var ANT_COL = ['Blanco','Negro','Gris'];
   COL['ant:Blanco'] = '#e6e4de'; COL['ant:Negro'] = '#242424'; COL['ant:Gris'] = '#86898a';
+  /* tonos de pintura de tráfico (amarillo vial, etc.) */
+  COL['tra:Amarillo']='#e8a90c'; COL['tra:Verde']='#1d6b3c'; COL['tra:Azul']='#1e4c8e'; COL['tra:Rojo']='#b01e23'; COL['tra:Blanco']='#ecebe6'; COL['tra:Gris']='#7f8284'; COL['tra:Negro']='#1d1d1d';
   function anticorrosivo(id, marca, fotos, cuarto, galon){
     return { id:id, marca:marca, nombre:'Anticorrosivo ' + marca, uso:'Acabado mate · Protege rejas, puertas metálicas y estructuras',
       desc:'Base que protege el metal del óxido. Viene en blanco, negro y gris, en acabado mate. Recomendado antes del esmalte.',
@@ -1572,10 +1574,12 @@ body.con-barra .tito{bottom:calc(136px + env(safe-area-inset-bottom,0px))}
         anticorrosivo('asu', 'Surticolor', { 'Galón':'img/ant-surticolor-galon.webp', 'Cuarto':'img/ant-surticolor-cuarto.webp' }, 25000, 80000),
         anticorrosivo('apr', 'Prolacol', { 'Galón':'img/esm-prolacol-galon.webp', 'Cuarto':'img/esm-prolacol-cuarto.webp' }, 27000, 80000)
       ] },
-    { id:'trafico', nombre:'Pintura de tráfico', sub:'Pisos y demarcación', desc:'Para pisos de cemento, parqueaderos y canchas.', forma:'galon', color:'Amarillo',
+    { id:'trafico', nombre:'Pintura de tráfico', sub:'Surticolor · Solo galón', desc:'Para pisos de cemento, parqueaderos y demarcación.', forma:'galon', color:'Amarillo', portada:'img/tra-surticolor-galon.webp',
+      nota:'Viene solo en galón. Todos los colores tienen el mismo precio. Los colores en pantalla son aproximados.',
       productos:[
-        { id:'tra', nombre:'Pintura de tráfico', uso:'Pisos y demarcación', desc:'Resistente al paso de personas y carros. Para pisos de cemento, parqueaderos, canchas y señalización.',
-          pres:[['Galón','1 galón',115000]], colores:['Amarillo','Rojo','Verde','Azul','Gris','Negro'], forma:'galon' }
+        { id:'tra', marca:'Surticolor', nombre:'Pintura de tráfico Surticolor', uso:'Pisos y demarcación · Secado rápido', desc:'Resistente al paso de personas y carros. Para pisos de cemento, parqueaderos, canchas, bordillos y señalización.',
+          pres:[['Galón','1 galón',115000]], colores:['Amarillo','Verde','Azul','Rojo','Blanco','Gris','Negro'], forma:'galon', etiqueta:'SURTICOLOR', paleta:'tra',
+          fotos:{ 'Galón':'img/tra-surticolor-galon.webp' } }
       ] },
     { id:'estuco', nombre:'Estuco plástico', sub:'Resanar y alisar', desc:'Deja la pared lisa y lista para pintar.', forma:'balde', color:'Crema',
       productos:[
