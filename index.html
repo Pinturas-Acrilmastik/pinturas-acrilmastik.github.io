@@ -188,6 +188,7 @@ p{margin:0}
 .pres:hover{border-color:var(--linea-fuerte)}
 .pres b{font-family:var(--f-cond);font-weight:600;font-size:15px;letter-spacing:.04em;text-transform:uppercase;line-height:1.1}
 .pres small{font-size:12px;color:var(--tinta-suave);line-height:1.2}
+.pres b{overflow-wrap:anywhere;max-width:100%} @media (max-width:560px){.mp__pres .pres b{font-size:14px;letter-spacing:.02em}}
 .pres[aria-pressed="true"]{border-color:var(--tinta);background:var(--tinta-relleno);color:var(--en-tinta-relleno)}
 .pres[aria-pressed="true"] small{color:var(--en-tinta-relleno);opacity:.8}
 .vin__total{display:flex;align-items:flex-end;justify-content:space-between;gap:12px 16px;flex-wrap:wrap;padding-top:14px;border-top:1px dashed var(--linea-fuerte)}
@@ -1591,12 +1592,14 @@ body.con-barra .tito{bottom:calc(136px + env(safe-area-inset-bottom,0px))}
           pres:[['Caneca','',70000]], forma:'balde', base:'Crema' }
       ] },
     */
-    { id:'varios', nombre:'Varios', sub:'Brochas, rodillos y más', desc:'Todo lo que necesitas para aplicar.', forma:'brocha', color:'Amarillo',
+    { id:'varios', nombre:'Varios', sub:'Brochas, rodillos y más', desc:'Todo lo que necesitas para aplicar.', forma:'brocha', color:'Amarillo', portada:'img/rod-9-antigoteo.webp',
       productos:[
-        { id:'bro', nombre:'Brochas', uso:'Herramientas', desc:'Brochas para esmaltes, vinilos y retoques, de 1" a 5".',
-          pres:[['1"','',4000],['2"','',7000],['2 1/2"','',8000],['3"','',9000],['4"','',12000],['5"','',15000]], def:1, forma:'brocha', etq:'Tamaño' },
-        { id:'rod', nombre:'Rodillos', uso:'Herramientas', desc:'Desde el rodillo pequeño para detalles hasta el de 9" profesional para paredes grandes.',
-          pres:[['2"','',4000],['4"','',6000],['6"','',8000],['9" económico','felpa acrílica',10000],['9" antigoteo','',15000],['9" profesional','',20000]], def:3, forma:'rodillo', etq:'Tamaño' },
+        { id:'bro', nombre:'Brochas', uso:'Thomas · Goya', desc:'Brochas Thomas de cerda mona natural: más larga, mejor cubrimiento y acabado profesional. La de 2 1/2" es Goya, línea económica de filamentos mixtos. Sirven para esmaltes, vinilos y retoques.',
+          pres:[['1"','Thomas',4000],['2"','',7000],['2 1/2"','Goya',8000],['3"','Thomas',9000],['4"','Thomas',12000],['5"','Thomas',15000]], def:3, forma:'brocha', etq:'Tamaño',
+          fotos:{ '1"':'img/bro-1.webp', '2 1/2"':'img/bro-2y2.webp', '3"':'img/bro-3.webp', '4"':'img/bro-4.webp', '5"':'img/bro-5.webp' } },
+        { id:'rod', nombre:'Rodillos', uso:'Popular · Brickell · Superior', desc:'Desde el rodillo pequeño para detalles hasta el de 9" para paredes grandes. El económico es para vinilos; el antigoteo y el profesional gotean menos, y el profesional sirve para todo tipo de pinturas y solventes.',
+          pres:[['2"','',4000],['4"','',6000],['6"','',8000],['9" económico','Popular · vinilos',10000],['9" antigoteo','Brickell',15000],['9" profesional','Superior antigoteo',20000]], def:3, forma:'rodillo', etq:'Tamaño',
+          fotos:{ '9" económico':'img/rod-9-economico.webp', '9" antigoteo':'img/rod-9-antigoteo.webp', '9" profesional':'img/rod-9-profesional.webp' } },
         { id:'ban', nombre:'Bandeja para pintura', uso:'Herramientas', desc:'Para cargar el rodillo de forma pareja y sin desperdiciar pintura.',
           pres:[['Unidad','',12000]], forma:'bandeja' },
         { id:'thi', nombre:'Thinner', uso:'Disolvente', desc:'Para diluir esmaltes y anticorrosivos y limpiar herramientas.',
