@@ -629,6 +629,8 @@ body.con-menu .tito{z-index:67} body.con-menu .wa-flot{z-index:66}
 @media (max-width:760px){.mp__img[data-tam="s"] img{max-height:170px}}
 @media (max-width:760px){.mp__img img,.mp__img .env{max-height:220px}}
 .mp__img.cambio > *{animation:fotoIn .35s ease}
+/* productos oscuros (bandeja negra): borde de luz para que no se pierdan en el fondo negro */
+.mp__img img[src$="bandeja.webp"]{filter:drop-shadow(0 0 1px rgba(255,255,255,.55)) drop-shadow(0 0 22px rgba(255,255,255,.16)) drop-shadow(0 16px 18px rgba(0,0,0,.6))}
 .mp__chip{position:absolute;left:14px;bottom:14px;background:rgba(255,255,255,.92);color:#141414;border-radius:999px;padding:3px 12px;font-family:var(--f-cond);font-weight:600;font-size:13px;letter-spacing:.04em}
 .mp__chip:empty{display:none}
 .mp__cuerpo{padding:22px 24px 24px;display:flex;flex-direction:column;gap:12px;min-width:0}
@@ -1600,8 +1602,8 @@ body.con-barra .tito{bottom:calc(136px + env(safe-area-inset-bottom,0px))}
         { id:'rod', nombre:'Rodillos', uso:'Popular · Superior · Brickell', desc:'Desde el rodillo pequeño para detalles hasta el de 9" para paredes grandes. El económico es para vinilos; el antigoteo y el profesional gotean menos y dejan un mejor acabado.',
           pres:[['2"','',4000],['4"','',6000],['6"','',8000],['9" económico','Popular · vinilos',10000],['9" antigoteo','Superior',15000],['9" profesional','Brickell',20000]], def:3, forma:'rodillo', etq:'Tamaño',
           fotos:{ '9" económico':'img/rod-9-economico.webp', '9" antigoteo':'img/rod-9-profesional.webp', '9" profesional':'img/rod-9-antigoteo.webp' } },
-        { id:'ban', nombre:'Bandeja para pintura', uso:'Herramientas', desc:'Para cargar el rodillo de forma pareja y sin desperdiciar pintura.',
-          pres:[['Unidad','',12000]], forma:'bandeja' },
+        { id:'ban', nombre:'Bandeja para pintura', uso:'Herramientas', desc:'Bandeja plástica para cargar el rodillo de forma pareja y sin desperdiciar pintura.',
+          pres:[['Unidad','',12000]], forma:'bandeja', fotos:{ 'Unidad':'img/bandeja.webp' } },
         { id:'thi', nombre:'Thinner', uso:'Disolvente', desc:'Para diluir esmaltes y anticorrosivos y limpiar herramientas.',
           pres:[['Media botella','',5000],['Botella','',8000],['Galón','1 galón',32000]], def:1, forma:'botella' }
       ] }
