@@ -2043,19 +2043,15 @@ body.con-barra .tito{bottom:calc(136px + env(safe-area-inset-bottom,0px))}
   /* PROMOCIONES DE TEMPORADA
      Para agregar una promo, copia una línea así (la imagen puede ser una ruta como 'promos/navidad-1.jpg'):
      { img: 'promos/navidad-1.jpg', alt: 'Qué dice la imagen', wa: 'Hola Acrilmastik, quiero la promo de ...' },
-     Si la lista está vacía se muestra el banner de temporada genérico. */
+     Si la lista está vacía, la sección de promociones no aparece. */
   var PROMOS = [];
 
   var pista = document.getElementById('promos-pista'), puntos = document.getElementById('promos-puntos');
   if (pista) {
     var balde = document.querySelector('.familia .f-c1');
     if (!PROMOS.length) {
-      pista.innerHTML = '<article class="promo promo--base"><div>' +
-        '<p class="eyebrow">Diciembre en Acrilmastik</p>' +
-        '<h3>Pinta tu casa <em>para diciembre</em></h3>' +
-        '<p>Que la visita llegue y diga “¡qué bonita quedó la casa!”. Pregúntanos por las promociones de temporada y te armamos el pedido.</p>' +
-        '<a class="btn btn--primario" href="' + waLink('Hola Acrilmastik, quiero conocer las promociones de Navidad.') + '" target="_blank" rel="noopener">Ver promos por WhatsApp</a>' +
-        '</div>' + (balde ? '<img class="arte" src="' + balde.src + '" alt="">' : '') + '</article>';
+      /* sin promos: la sección no se muestra (el dueño quitó el banner genérico, nov 2026) */
+      document.getElementById('promos').style.display = 'none';
     } else {
       PROMOS.forEach(function(p){
         var a = document.createElement('article'); a.className = 'promo';
