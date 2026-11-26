@@ -1576,7 +1576,7 @@ body.con-barra .tito{bottom:calc(136px + env(safe-area-inset-bottom,0px))}
      el botón "Pagar ahora" no aparece y todo sigue por WhatsApp.
      Para probar en este PC: node pagos/local.js y abrir http://localhost:5173/?pagos=http://localhost:8787 */
   // pruebas: true mientras Wompi esté en Sandbox (muestra el aviso "modo de pruebas" en el carrito)
-  var PAGOS = { url: 'https://acrilmastik-pagos.acrilmastik-pagos.workers.dev', widget: 'https://checkout.wompi.co/widget.js', pruebas: true };
+  var PAGOS = { url: 'https://acrilmastik-pagos.acrilmastik-pagos.workers.dev', widget: 'https://checkout.wompi.co/widget.js', pruebas: false };
   function guardarP(k, v){ try { localStorage.setItem(k, v); } catch(e){} }
   function borrarP(k){ try { localStorage.removeItem(k); } catch(e){} }
   try { if (/^(localhost|127\.0\.0\.1)$/.test(location.hostname)) { var qp = new URLSearchParams(location.search).get('pagos'); if (qp) { PAGOS.url = qp.replace(/\/$/, ''); if (!/workers\.dev$/.test(PAGOS.url)) PAGOS.widget = PAGOS.url + '/simulador/widget.js'; } } } catch(e){}
