@@ -1813,7 +1813,7 @@ body.con-barra .tito{bottom:calc(136px + env(safe-area-inset-bottom,0px))}
   var menu = document.getElementById('menu'), menuCuerpo = document.getElementById('menu-cuerpo');
   function tarjetaProducto(cat, p){
     var st = { pres: p.def != null ? p.def : 0, color: p.colores ? 0 : -1, cant: 1 };
-    var el = document.createElement('article'); el.className = 'mp';
+    var el = document.createElement('article'); el.className = 'mp'; el.setAttribute('data-pid', p.id);
     var etq = p.etq || 'Presentación';
     el.innerHTML =
       '<div class="mp__foto"><div class="mp__img"></div><span class="mp__chip"></span></div>' +
@@ -1860,7 +1860,8 @@ body.con-barra .tito{bottom:calc(136px + env(safe-area-inset-bottom,0px))}
   }
   var guiaT = document.getElementById('guia-vinilos-t'), guiaHTML = guiaT ? guiaT.innerHTML : '';
   var abierta = null, antesDeAbrir = null;
-  function abrirMenu(id){
+  /* Link directo a un producto: #menu-<categoría>/<producto>/<presentación>, ej. #menu-vinilos/vt1/3 (cuñete Tipo 1) */
+  function abrirMenu(id, pid, pres){
     var cat = CATS.filter(function(c){ return c.id === id; })[0]; if (!cat) return cerrarMenu();
     if (abierta !== id) {
       menuCuerpo.innerHTML = '';
@@ -1876,7 +1877,8 @@ body.con-barra .tito{bottom:calc(136px + env(safe-area-inset-bottom,0px))}
         });
         function verMarca(i){ tarjetas.forEach(function(t, j){ t.hidden = j !== i; }); [].forEach.call(tabs.children, function(b, j){ b.setAttribute('aria-selected', String(j === i)); }); }
         menuCuerpo.insertBefore(tabs, tarjetas[0]); menuCuerpo.insertBefore(tt, tabs); verMarca(0);
-      }
+        menuCuerpo._verMarca = verMarca;
+      } else menuCuerpo._verMarca = null;
       if (cat.nota) { var n = document.createElement('p'); n.className = 'menu__nota'; n.innerHTML = cat.nota.replace('carta de colores', '<a href="#colores">carta de colores</a>'); menuCuerpo.appendChild(n); }
       if (cat.guia && guiaHTML) { var g = document.createElement('div'); g.className = 'vin-guia'; g.innerHTML = guiaHTML; menuCuerpo.appendChild(g); }
       var otras = document.createElement('nav'); otras.className = 'menu__otras'; otras.setAttribute('aria-label', 'Otras categorías');
@@ -1886,6 +1888,12 @@ body.con-barra .tito{bottom:calc(136px + env(safe-area-inset-bottom,0px))}
     }
     if (menu.hidden) { antesDeAbrir = document.activeElement; menu.hidden = false; document.body.classList.add('con-menu'); }
     menu.scrollTop = 0; document.getElementById('menu-t').focus({ preventScroll: true });
+    var card = pid && menuCuerpo.querySelector('.mp[data-pid="' + pid + '"]');
+    if (card) {
+      if (menuCuerpo._verMarca) menuCuerpo._verMarca([].indexOf.call(menuCuerpo.querySelectorAll('.mp'), card));
+      var bp = pres != null && card.querySelectorAll('.mp__pres .pres')[pres]; if (bp) bp.click();
+      requestAnimationFrame(function(){ menu.scrollTop = Math.max(0, card.offsetTop - 90); });
+    }
   }
   function cerrarMenu(){
     if (menu.hidden) return;
@@ -1894,7 +1902,7 @@ body.con-barra .tito{bottom:calc(136px + env(safe-area-inset-bottom,0px))}
   }
   function rutaMenu(){
     var h = location.hash;
-    if (h.indexOf('#menu-') === 0) abrirMenu(h.slice(6));
+    if (h.indexOf('#menu-') === 0) { var r = decodeURIComponent(h.slice(6)).split('/'); abrirMenu(r[0], r[1], r[2] != null && r[2] !== '' ? +r[2] : null); }
     else { cerrarMenu(); if (h === '#colores' || h === '#productos') { var d = document.getElementById(h.slice(1)); if (d) d.scrollIntoView(); } }
   }
   window.addEventListener('hashchange', rutaMenu);
