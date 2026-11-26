@@ -1629,6 +1629,8 @@ body.con-barra .tito{bottom:calc(136px + env(safe-area-inset-bottom,0px))}
         if (p.cliente.correo) cfg.customerData.email = p.cliente.correo;
         guardarP('acril-pago', JSON.stringify({ ref: p.referencia, t: p.token }));
         estadoBoton(false);
+        // la ventana de Wompi necesita que la página pueda deslizarse: se cierra el carrito (que bloquea el desplazamiento)
+        carro.hidden = true; document.documentElement.style.overflow = ''; document.body.style.overflow = '';
         new window.WidgetCheckout(cfg).open(function(r){
           var tx = r && r.transaction;
           if (!tx) return; // cerró sin pagar
