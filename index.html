@@ -270,7 +270,7 @@ body.con-barra{padding-bottom:76px}
 .carro__form{display:flex;flex-direction:column;gap:8px}
 .carro__form label{font-weight:700;font-size:14px}
 .carro__form label span{font-weight:500;color:var(--tinta-suave)}
-.carro__form input[type=text]{font:inherit;padding:10px 12px;border-radius:var(--radio-s);border:1.5px solid var(--linea-fuerte);background:var(--lienzo-alto);color:var(--tinta)}
+.carro__form input[type=text],.carro__form input[type=tel],.carro__form input[type=email]{font:inherit;padding:10px 12px;border-radius:var(--radio-s);border:1.5px solid var(--linea-fuerte);background:var(--lienzo-alto);color:var(--tinta)}
 .carro__form fieldset{border:0;margin:6px 0 0;padding:0;display:flex;flex-direction:column;gap:6px}
 .carro__form legend{font-weight:700;font-size:14px;margin-bottom:4px;padding:0}
 .radio{display:flex;align-items:center;gap:8px;font-weight:600!important;font-size:14.5px!important}
@@ -584,6 +584,27 @@ body::before{background:#0a0a0a}
 }
 @media (prefers-reduced-motion:reduce){.nieve{display:none}}
 .vin__foto img{max-height:230px;width:auto;object-fit:contain}
+/* ===== Pago en línea ===== */
+.carro__form input[type="tel"],.carro__form input[type="email"],#pedido-dir{width:100%}
+#dir-caja{margin-top:10px;display:flex;flex-direction:column;gap:6px}
+#dir-caja[hidden],[data-solo-pago][hidden],.carro__vacio[hidden],.carro__extra[hidden],.carro__form[hidden],.carro__pie[hidden],.carro__pagar[hidden]{display:none}
+.carro__pagar{width:100%;justify-content:center;gap:10px;display:inline-flex;align-items:center}
+.carro__pagar svg{width:20px;height:20px}
+.carro__pagar[disabled]{opacity:.6;cursor:progress}
+.con-pagos .carro__enviar{background:transparent;color:var(--tinta);border:2px solid rgba(255,255,255,.25)}
+.con-pagos .carro__enviar:hover{border-color:#25d366;color:#25d366}
+.carro__medios{font-size:12.5px;color:var(--tinta-suave);text-align:center;margin:-2px 0 4px}
+.carro__medios[hidden]{display:none}
+.carro__res{flex:1;overflow-y:auto;padding:28px 22px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;text-align:center}
+.carro__res[hidden]{display:none}
+.carro.con-res .carro__cuerpo,.carro.con-res .carro__pie{display:none}
+.carro__res .ico{width:72px;height:72px;border-radius:50%;display:grid;place-items:center;font-size:36px;font-weight:800}
+.carro__res .ico.ok{background:#1e9e2a;color:#fff}.carro__res .ico.no{background:#c8102e;color:#fff}.carro__res .ico.esp{border:4px solid rgba(255,255,255,.15);border-top-color:var(--amarillo);animation:girar 1s linear infinite}
+@keyframes girar{to{transform:rotate(360deg)}}
+.carro__res h3{font-size:24px}.carro__res p{color:var(--tinta-suave);max-width:34ch}
+.carro__res .ref{font-family:var(--f-cond);letter-spacing:.06em;color:var(--tinta);background:rgba(255,255,255,.06);padding:6px 14px;border-radius:999px}
+.carro__res .fila{display:flex;flex-direction:column;gap:10px;width:100%;max-width:320px;margin-top:6px}
+
 /* ===== Catálogo por categorías ===== */
 .cat{padding-block:56px 24px}
 .cat .sec__cab{margin-bottom:28px}
@@ -928,7 +949,7 @@ body.con-barra .tito{bottom:calc(136px + env(safe-area-inset-bottom,0px))}
       <header class="doc__cab">
         <p class="eyebrow">Documento legal</p>
         <h1>Política de Tratamiento de Datos Personales</h1>
-        <p class="doc__meta">Vigente desde el 12 de noviembre de 2026 · Última actualización: 12 de noviembre de 2026</p>
+        <p class="doc__meta">Vigente desde el 12 de noviembre de 2026 · Última actualización: 25 de noviembre de 2026</p>
       </header>
 
       <aside class="doc__aviso" aria-labelledby="aviso-priv-t">
@@ -1004,7 +1025,7 @@ body.con-barra .tito{bottom:calc(136px + env(safe-area-inset-bottom,0px))}
         <h2>5. Qué datos recolectamos y cómo</h2>
         <p><b>Canales de recolección.</b> Recibimos datos personales cuando:</p>
         <ul>
-          <li>Envías un pedido o una cotización desde este sitio web. El sitio no guarda en servidores tus datos: el pedido se arma en tu dispositivo y tú lo envías a nuestro WhatsApp.</li>
+          <li>Envías un pedido o una cotización desde este sitio web. Si lo envías por WhatsApp, el pedido se arma en tu dispositivo y tú lo envías a nuestro WhatsApp. Si lo pagas en línea, guardamos en nuestro servidor de pedidos tu nombre, celular, correo (si lo das), la dirección de entrega, los productos y el resultado del pago que nos informa Wompi.</li>
           <li>Nos escribes por WhatsApp, redes sociales o correo, o nos llamas.</li>
           <li>Compras en nuestro punto de venta o a través de uno de nuestros asesores comerciales, que registran tu pedido para atenderlo.</li>
           <li>Nos dejas una opinión o reseña y nos autorizas a publicarla.</li>
@@ -1082,7 +1103,7 @@ body.con-barra .tito{bottom:calc(136px + env(safe-area-inset-bottom,0px))}
         <h2>12. Con quién compartimos tus datos</h2>
         <p>No vendemos ni alquilamos tus datos. Solo los compartimos en la medida necesaria para las finalidades de esta política:</p>
         <ul>
-          <li><b>Proveedores tecnológicos que actúan como encargados:</b> el servicio de mensajería WhatsApp (Meta Platforms) por el que recibimos y respondemos pedidos, el proveedor que aloja este sitio web y el proveedor de tipografías web (Google Fonts). Algunos de estos proveedores procesan información en servidores ubicados fuera de Colombia, como en Estados Unidos.</li>
+          <li><b>Proveedores tecnológicos que actúan como encargados:</b> el servicio de mensajería WhatsApp (Meta Platforms) por el que recibimos y respondemos pedidos y por el que se nos avisa cada pedido pagado en línea, la pasarela de pagos Wompi (Bancolombia), que procesa los pagos en línea, el proveedor que aloja nuestro servidor de pedidos (Cloudflare), el proveedor que aloja este sitio web y el proveedor de tipografías web (Google Fonts). Algunos de estos proveedores procesan información en servidores ubicados fuera de Colombia, como en Estados Unidos.</li>
           <li><b>Domiciliarios o transportadores,</b> con los datos mínimos para entregarte el pedido (nombre, teléfono y dirección).</li>
           <li><b>Nuestro contador o asesor tributario,</b> para cumplir obligaciones contables y tributarias.</li>
           <li><b>Autoridades competentes,</b> cuando lo exija la ley o una orden judicial.</li>
@@ -1151,7 +1172,7 @@ body.con-barra .tito{bottom:calc(136px + env(safe-area-inset-bottom,0px))}
 
       <section id="t-2">
         <h2>2. Qué es este sitio</h2>
-        <p>Este sitio es un catálogo con precios para que conozcas nuestros productos, armes tu pedido y nos lo envíes por WhatsApp. El sitio no cobra pagos en línea. Estos términos aplican a las compras que se originan en el sitio y se complementan con el Estatuto del Consumidor (Ley 1480 de 2011, modificada por la Ley 2439 de 2024), que prevalece en todo lo que te sea más favorable. Al enviarnos un pedido desde el sitio declaras que los leíste y los aceptas.</p>
+        <p>Este sitio es un catálogo con precios para que conozcas nuestros productos, armes tu pedido y nos lo envíes por WhatsApp o, cuando el sitio muestra el botón <b>“Pagar ahora”</b>, lo pagues en línea a través de la pasarela de pagos <b>Wompi</b> (Bancolombia). Acrilmastik no recibe ni guarda los datos de tu tarjeta o de tu cuenta: los escribes directamente en la ventana segura de Wompi. Estos términos aplican a las compras que se originan en el sitio y se complementan con el Estatuto del Consumidor (Ley 1480 de 2011, modificada por la Ley 2439 de 2024), que prevalece en todo lo que te sea más favorable. Al enviarnos o pagar un pedido desde el sitio declaras que los leíste y los aceptas.</p>
       </section>
 
       <section id="t-3">
@@ -1162,7 +1183,8 @@ body.con-barra .tito{bottom:calc(136px + env(safe-area-inset-bottom,0px))}
           <li>Te respondemos con la confirmación: disponibilidad, precio final de los colores que hayas pedido, valor total, forma de pago y fecha y forma de entrega.</li>
           <li>El pedido queda en firme cuando, después de esa confirmación, nos dices que estás de acuerdo. Ese mensaje de confirmación es tu resumen de compra; consérvalo.</li>
         </ol>
-        <p>Enviar el pedido no te obliga a comprar: hasta que lo confirmes, puedes cambiarlo o cancelarlo sin costo.</p>
+        <p>Enviar el pedido por WhatsApp no te obliga a comprar: hasta que lo confirmes, puedes cambiarlo o cancelarlo sin costo.</p>
+        <p><b>Si pagas en línea:</b> escribes tu nombre y apellido, tu celular y, si pides domicilio, la dirección; aceptas la Política de Tratamiento de Datos y estos términos, y pagas en la ventana de Wompi con los medios que esta tenga habilitados. El pedido queda en firme cuando Wompi aprueba el pago. En pantalla te mostramos la referencia del pedido y tu comprobante, que debes conservar, y te escribimos por WhatsApp para coordinar la entrega. Los pagos en línea son solo para los productos y precios publicados; los vinilos de color se cotizan y se pagan por WhatsApp. Si un producto que pagaste no está disponible, aplica lo dicho en la sección 6.</p>
       </section>
 
       <section id="t-4">
@@ -1186,7 +1208,16 @@ body.con-barra .tito{bottom:calc(136px + env(safe-area-inset-bottom,0px))}
 
       <section id="t-7">
         <h2>7. Pagos</h2>
-        <p>Los medios de pago disponibles se informan al confirmar el pedido (por ejemplo, efectivo en el punto de venta o transferencia). Nunca te pediremos claves, códigos de verificación ni datos completos de tarjetas por WhatsApp. Si pagas con un instrumento de pago electrónico en una venta a distancia, puedes solicitar la reversión del pago en los casos y plazos del artículo 51 de la Ley 1480 de 2011.</p>
+        <p>Puedes pagar de dos formas: (1) en efectivo o por transferencia, según lo que te informemos al confirmar un pedido por WhatsApp; o (2) en línea desde el sitio, a través de Wompi, con los medios que esa pasarela tenga habilitados (por ejemplo, tarjeta débito o crédito, PSE o Nequi). En el pago en línea el cobro lo procesa Wompi y puede aparecer a su nombre en tu extracto. Nunca te pediremos claves, códigos de verificación ni datos completos de tarjetas por WhatsApp.</p>
+        <h3>Reversión del pago</h3>
+        <p>Si en una compra a distancia pagaste con tarjeta de crédito, débito o prepago, o con cualquier otro instrumento de pago electrónico, puedes pedir que se reverse el pago (artículo 51 de la Ley 1480 de 2011, reglamentado por el Decreto 587 de 2016, hoy en el capítulo 51 del Decreto 1074 de 2015) cuando:</p>
+        <ul>
+          <li>hayas sido objeto de fraude;</li>
+          <li>la operación no haya sido solicitada por ti;</li>
+          <li>no hayas recibido el producto;</li>
+          <li>el producto que recibiste no corresponda a lo que pediste o esté defectuoso.</li>
+        </ul>
+        <p>Para pedirla: (1) preséntanos tu queja dentro de los cinco (5) días hábiles siguientes a la fecha en que conociste la causa (por ejemplo, el día en que recibiste el producto o en que debiste recibirlo), por WhatsApp al +57 315 064 3059 o en nuestro punto, indicando la referencia del pedido y la causa; (2) dentro de ese mismo plazo, avisa al emisor de tu instrumento de pago (tu banco o entidad financiera) para que reverse la operación; y (3) cuando la causa sea que el producto no corresponde o está defectuoso, devuélvenos el producto en las mismas condiciones en que lo recibiste. Los participantes del proceso de pago tienen un máximo de quince (15) días hábiles, contados desde la solicitud, para reversar el pago. La reversión es distinta del derecho de retracto (sección 11) y de la garantía (sección 12), que puedes ejercer en sus propios términos.</p>
       </section>
 
       <section id="t-8">
@@ -1382,22 +1413,36 @@ body.con-barra .tito{bottom:calc(136px + env(safe-area-inset-bottom,0px))}
         <div class="carro__sug" id="carro-sug"></div>
       </div>
       <form class="carro__form" id="carro-form" hidden>
-        <label for="pedido-nombre">Tu nombre <span>(opcional)</span></label>
-        <input id="pedido-nombre" name="nombre" type="text" autocomplete="name" placeholder="Ej.: Carlos Rodríguez">
+        <label for="pedido-nombre">Tu nombre y apellido</label>
+        <input id="pedido-nombre" name="nombre" type="text" autocomplete="name" placeholder="Ej.: Camila Ovalle" maxlength="80">
+        <label for="pedido-cel">Tu celular</label>
+        <input id="pedido-cel" name="celular" type="tel" inputmode="numeric" autocomplete="tel-national" placeholder="Ej.: 300 123 4567" maxlength="16">
+        <label for="pedido-correo" data-solo-pago hidden>Tu correo <span>(opcional, para el comprobante)</span></label>
+        <input id="pedido-correo" name="correo" type="email" autocomplete="email" placeholder="Ej.: camila@correo.com" maxlength="120" data-solo-pago hidden>
         <fieldset>
           <legend>Entrega</legend>
           <label class="radio"><input type="radio" name="entrega" id="c-recoger" value="Recojo en el punto" checked> Recojo en el punto</label>
           <label class="radio"><input type="radio" name="entrega" id="c-envio" value="Domicilio en Ibagué"> Domicilio en Ibagué</label>
           <p class="entrega-nota" id="entrega-nota">Gratis en Ibagué para compras superiores a $250.000.</p>
+          <div id="dir-caja" hidden>
+            <label for="pedido-dir">Dirección de entrega en Ibagué</label>
+            <input id="pedido-dir" name="direccion" type="text" autocomplete="street-address" placeholder="Ej.: Calle 86 #4B-42, barrio Jardín" maxlength="160">
+          </div>
         </fieldset>
         <label class="consent" for="c-acepto"><input type="checkbox" id="c-acepto" name="acepto"> <span>Acepto la <a href="#privacidad">Política de Tratamiento de Datos</a> y los <a href="#terminos">Términos y condiciones</a>, y autorizo a Acrilmastik a usar mis datos para atender este pedido.</span></label>
         <label class="consent" for="c-promos"><input type="checkbox" id="c-promos" name="promos"> <span>Quiero recibir promociones y novedades por WhatsApp <span style="color:var(--tinta-suave)">(opcional)</span>.</span></label>
         <p class="consent-err" id="consent-err" aria-live="polite"></p>
       </form>
     </div>
+    <div class="carro__res" id="carro-res" hidden aria-live="polite"></div>
     <footer class="carro__pie" id="carro-pie" hidden>
       <div class="carro__total"><span>Total</span><b id="carro-total">$ 0</b></div>
-      <p class="carro__nota">Te confirmamos disponibilidad y el total final por WhatsApp. Domicilio gratis en Ibagué para compras superiores a $250.000.</p>
+      <p class="carro__nota" id="carro-nota">Te confirmamos disponibilidad y el total final por WhatsApp. Domicilio gratis en Ibagué para compras superiores a $250.000.</p>
+      <button class="btn btn--primario carro__pagar" type="button" id="carro-pagar" hidden>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2.5" y="5" width="19" height="14" rx="2.5"/><path d="M2.5 10h19M6.5 15h4"/></svg>
+        <span id="carro-pagar-t">Pagar ahora</span>
+      </button>
+      <p class="carro__medios" id="carro-medios" hidden>Tarjeta, PSE, Nequi y más · Pago seguro con Wompi</p>
       <a class="btn btn--primario carro__enviar" id="carro-enviar" href="#" target="_blank" rel="noopener">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 21l1.7-5A8.5 8.5 0 1 1 8 19.3L3 21z"/><path d="M9 10c.5 2 2 3.5 4 4l1.3-1.3 2 1-.5 1.6c-3 .5-7-3.5-6.5-6.5L11 8.3l1 2z"/></svg>
         Enviar pedido por WhatsApp
@@ -1425,12 +1470,12 @@ body.con-barra .tito{bottom:calc(136px + env(safe-area-inset-bottom,0px))}
 
   /* ---------- Carrito de pedido ---------- */
   var CARRO = [], CLAVE = 'acril-carro-v1';
-  try { var g = JSON.parse(localStorage.getItem(CLAVE) || '[]'); if (Array.isArray(g)) CARRO = g.filter(function(x){ return x && x.id && x.precio > 0 && x.qty > 0; }); } catch(e){}
+  try { var g = JSON.parse(localStorage.getItem(CLAVE) || '[]'); if (Array.isArray(g)) CARRO = g.filter(function(x){ return x && /^m-/.test(x.id) && x.precio > 0 && x.qty > 0; }); } catch(e){}
   function guardar(){ try { localStorage.setItem(CLAVE, JSON.stringify(CARRO)); } catch(e){} }
   var SUGERIDOS = [
-    { id:'p4-9', nombre:'Rodillo 9" antigoteo', det:'Unidad', precio:15000 },
-    { id:'p4-11', nombre:'Bandeja para pintura', det:'Unidad', precio:12000 },
-    { id:'p4-1', nombre:'Brocha 2"', det:'Unidad', precio:7000 }
+    { id:'m-rod-4--1', nombre:'Rodillos', det:'9" antigoteo · Superior', precio:15000, txt:'Rodillo 9" antigoteo' },
+    { id:'m-ban-0--1', nombre:'Bandeja para pintura', det:'Unidad', precio:12000, txt:'Bandeja para pintura' },
+    { id:'m-bro-1--1', nombre:'Brochas', det:'2" · Goya', precio:7000, txt:'Brocha 2"' }
   ];
   var avisoT;
   function avisar(t){ var a = document.getElementById('aviso'); a.textContent = t; a.classList.add('ver'); clearTimeout(avisoT); avisoT = setTimeout(function(){ a.classList.remove('ver'); }, 1800); }
@@ -1450,8 +1495,10 @@ body.con-barra .tito{bottom:calc(136px + env(safe-area-inset-bottom,0px))}
     var l = ['Hola Acrilmastik, quiero hacer este pedido:', ''];
     CARRO.forEach(function(x){ l.push('• ' + x.qty + ' × ' + x.nombre + (x.det && x.det !== 'Unidad' ? ' (' + x.det + ')' : '') + ' — ' + pesos(x.precio * x.qty)); });
     l.push('', 'Total: ' + pesos(totalCarro()));
+    var cel = (document.getElementById('pedido-cel').value || '').trim(), dir = (document.getElementById('pedido-dir').value || '').trim();
     if (nombre) l.push('Nombre: ' + nombre);
-    l.push('Entrega: ' + (ent ? ent.value : 'Recojo en el punto'));
+    if (cel) l.push('Celular: ' + cel);
+    l.push('Entrega: ' + (ent ? ent.value : 'Recojo en el punto') + (ent && ent.id === 'c-envio' && dir ? ' — ' + dir : ''));
     l.push('', 'Acepto la Política de Tratamiento de Datos y los Términos y condiciones de Acrilmastik.');
     l.push('Autorizo recibir promociones por WhatsApp: ' + (document.getElementById('c-promos').checked ? 'Sí' : 'No'));
     l.push('', '¿Me confirman disponibilidad?');
@@ -1481,12 +1528,12 @@ body.con-barra .tito{bottom:calc(136px + env(safe-area-inset-bottom,0px))}
       ul.appendChild(li);
     });
     var faltan = SUGERIDOS.filter(function(s){ return !CARRO.some(function(x){ return x.id === s.id; }); });
-    var hayPintura = CARRO.some(function(x){ return /^(v|p0|p1|p2|p3)/.test(x.id); });
+    var hayPintura = CARRO.some(function(x){ return /^m-(vt1|vt2|epr|esu|epi|apr|asu|tra)-/.test(x.id); });
     var ex = document.getElementById('carro-extra'); ex.hidden = !(n > 0 && hayPintura && faltan.length);
     var sg = document.getElementById('carro-sug'); sg.innerHTML = '';
     faltan.forEach(function(s){
       var b = document.createElement('button'); b.type = 'button'; b.className = 'sug';
-      b.innerHTML = '+ ' + s.nombre + ' <b>' + pesos(s.precio) + '</b>';
+      b.innerHTML = '+ ' + (s.txt || s.nombre) + ' <b>' + pesos(s.precio) + '</b>';
       b.addEventListener('click', function(){ agregar(s); });
       sg.appendChild(b);
     });
@@ -1496,6 +1543,7 @@ body.con-barra .tito{bottom:calc(136px + env(safe-area-inset-bottom,0px))}
       envio.disabled = true;
       nota.textContent = 'Gratis en Ibagué para compras superiores a $250.000. Te faltan ' + pesos(MIN_DOM - tot + 1) + '.';
     } else { envio.disabled = false; nota.textContent = '¡Tu domicilio en Ibagué es gratis! Te confirmamos la fecha de entrega.'; }
+    document.getElementById('dir-caja').hidden = !envio.checked;
     var env = document.getElementById('carro-enviar');
     var ok = document.getElementById('c-acepto').checked;
     env.href = n && ok ? waLink(mensaje()) : '#';
@@ -1521,6 +1569,107 @@ body.con-barra .tito{bottom:calc(136px + env(safe-area-inset-bottom,0px))}
     if (window.tito) window.tito('celebra');
   });
   document.querySelectorAll('.consent a').forEach(function(a){ a.addEventListener('click', function(){ cerrarCarro(); }); });
+
+  /* ---------- Pago en línea (Wompi) ----------
+     PAGOS.url = dirección del servidor de pagos (Cloudflare Worker, carpeta pagos/). Mientras esté vacía,
+     el botón "Pagar ahora" no aparece y todo sigue por WhatsApp.
+     Para probar en este PC: node pagos/local.js y abrir http://localhost:5173/?pagos=http://localhost:8787 */
+  var PAGOS = { url: '', widget: 'https://checkout.wompi.co/widget.js' };
+  function guardarP(k, v){ try { localStorage.setItem(k, v); } catch(e){} }
+  function borrarP(k){ try { localStorage.removeItem(k); } catch(e){} }
+  try { if (/^(localhost|127\.0\.0\.1)$/.test(location.hostname)) { var qp = new URLSearchParams(location.search).get('pagos'); if (qp) { PAGOS.url = qp.replace(/\/$/, ''); PAGOS.widget = PAGOS.url + '/simulador/widget.js'; } } } catch(e){}
+  var btnPagar = document.getElementById('carro-pagar'), res = document.getElementById('carro-res');
+  if (PAGOS.url) {
+    btnPagar.hidden = false; document.getElementById('carro-medios').hidden = false;
+    carro.classList.add('con-pagos');
+    document.querySelectorAll('[data-solo-pago]').forEach(function(e){ e.hidden = false; });
+    document.getElementById('carro-nota').textContent = 'Paga en línea o envía tu pedido por WhatsApp. Domicilio gratis en Ibagué para compras superiores a $250.000.';
+  }
+  function datosPago(){
+    var ent = document.getElementById('c-envio').checked ? 'domicilio' : 'recoger';
+    return { items: CARRO.map(function(x){ return { id:x.id, qty:x.qty }; }),
+      cliente: { nombre: document.getElementById('pedido-nombre').value.trim(), celular: document.getElementById('pedido-cel').value.trim(), correo: document.getElementById('pedido-correo').value.trim() },
+      entrega: ent, direccion: ent === 'domicilio' ? document.getElementById('pedido-dir').value.trim() : '',
+      acepto: document.getElementById('c-acepto').checked, promos: document.getElementById('c-promos').checked };
+  }
+  function errorPago(t, campo){ var er = document.getElementById('consent-err'); er.textContent = t; if (campo) { var c = document.getElementById(campo); if (c) c.focus(); } }
+  function cargarWidget(){
+    return new Promise(function(ok, no){
+      if (window.WidgetCheckout) return ok();
+      var sc = document.createElement('script'); sc.src = PAGOS.widget; sc.onload = function(){ ok(); }; sc.onerror = function(){ no(new Error('No pudimos abrir la pasarela de pago. Revisa tu conexión e intenta de nuevo.')); };
+      document.head.appendChild(sc);
+    });
+  }
+  function estadoBoton(ocupado, t){ btnPagar.disabled = ocupado; document.getElementById('carro-pagar-t').textContent = t || 'Pagar ahora'; }
+  btnPagar.addEventListener('click', function(){
+    if (!CARRO.length || btnPagar.disabled) return;
+    var d = datosPago();
+    if (d.cliente.nombre.length < 3 || !/\s/.test(d.cliente.nombre)) return errorPago('Escribe tu nombre y apellido.', 'pedido-nombre');
+    if (!/^3\d{9}$/.test(d.cliente.celular.replace(/\D/g, '').replace(/^57(?=3\d{9}$)/, ''))) return errorPago('Escribe tu celular de 10 dígitos (empieza por 3).', 'pedido-cel');
+    if (d.entrega === 'domicilio' && d.direccion.length < 6) return errorPago('Escribe la dirección de entrega en Ibagué.', 'pedido-dir');
+    if (!d.acepto) return errorPago('Para pagar, acepta la Política de Tratamiento de Datos y los Términos.', 'c-acepto');
+    errorPago('');
+    estadoBoton(true, 'Preparando tu pago…');
+    var p;
+    fetch(PAGOS.url + '/pedido', { method:'POST', headers:{ 'Content-Type':'application/json' }, body: JSON.stringify(d) })
+      .then(function(r){ return r.json().then(function(j){ if (!r.ok) throw new Error(j.error || 'No pudimos preparar el pago.'); return j; }); })
+      .then(function(j){
+        p = j;
+        if (j.total !== totalCarro()) avisar('Actualizamos los precios: total ' + pesos(j.total));
+        return cargarWidget();
+      })
+      .then(function(){
+        var vuelta = location.origin + location.pathname + '?pago=' + p.referencia + '&t=' + p.token + (PAGOS.url && /^localhost|^127/.test(location.hostname) ? '&pagos=' + encodeURIComponent(PAGOS.url) : '');
+        var cfg = { currency: p.moneda, amountInCents: p.montoCentavos, reference: p.referencia, publicKey: p.llavePublica, signature: { integrity: p.firma }, redirectUrl: vuelta,
+          customerData: { fullName: p.cliente.nombre, phoneNumber: p.cliente.celular, phoneNumberPrefix: '+57' } };
+        if (p.cliente.correo) cfg.customerData.email = p.cliente.correo;
+        guardarP('acril-pago', JSON.stringify({ ref: p.referencia, t: p.token }));
+        estadoBoton(false);
+        new window.WidgetCheckout(cfg).open(function(r){
+          var tx = r && r.transaction;
+          if (!tx) return; // cerró sin pagar
+          seguirPago(p.referencia, p.token);
+        });
+      })
+      .catch(function(e){ estadoBoton(false); errorPago(e.message || 'No pudimos preparar el pago. Intenta de nuevo o envía tu pedido por WhatsApp.'); });
+  });
+  function verRes(html){ res.innerHTML = html; res.hidden = false; carro.classList.add('con-res'); }
+  function cerrarRes(){ res.hidden = true; res.innerHTML = ''; carro.classList.remove('con-res'); }
+  function seguirPago(ref, t){
+    if (carro.hidden) abrirCarro();
+    verRes('<div class="ico esp" aria-hidden="true"></div><h3>Confirmando tu pago…</h3><p>No cierres esta ventana. Esto toma unos segundos.</p><span class="ref">Ref. ' + ref + '</span>');
+    var intentos = 0;
+    (function preguntar(){
+      fetch(PAGOS.url + '/pedido/' + encodeURIComponent(ref) + '?t=' + encodeURIComponent(t), { cache:'no-store' })
+        .then(function(r){ return r.ok ? r.json() : null; })
+        .then(function(j){
+          var e = j && j.estado;
+          if (e === 'APROBADO' || e === 'REVISAR') {
+            CARRO = []; guardar(); pintarCarro(); borrarP('acril-pago');
+            if (window.tito) window.tito('celebra');
+            verRes('<div class="ico ok" aria-hidden="true">✓</div><h3>¡Pago aprobado!</h3><p>Gracias por tu compra. Ya nos llegó tu pedido y te escribimos por WhatsApp para coordinar la entrega.</p><span class="ref">Ref. ' + ref + '</span>' +
+              '<div class="fila"><a class="btn btn--primario" href="' + PAGOS.url + '/comprobante/' + ref + '?t=' + t + '" target="_blank" rel="noopener">Ver mi comprobante</a><button class="btn btn--contorno" type="button" id="res-cerrar">Seguir viendo productos</button></div>');
+            document.getElementById('res-cerrar').addEventListener('click', function(){ cerrarRes(); cerrarCarro(); });
+            return;
+          }
+          if (e === 'RECHAZADO' || e === 'ERROR' || e === 'ANULADO') {
+            borrarP('acril-pago');
+            verRes('<div class="ico no" aria-hidden="true">✕</div><h3>El pago no se aprobó</h3><p>No se te hizo ningún cobro. Puedes intentarlo otra vez con otro medio de pago o enviarnos el pedido por WhatsApp.</p><span class="ref">Ref. ' + ref + '</span>' +
+              '<div class="fila"><button class="btn btn--primario" type="button" id="res-volver">Volver a mi pedido</button></div>');
+            document.getElementById('res-volver').addEventListener('click', cerrarRes);
+            return;
+          }
+          if (++intentos < 30) return setTimeout(preguntar, 2000);
+          verRes('<div class="ico esp" aria-hidden="true"></div><h3>Tu pago está en proceso</h3><p>Algunos pagos (como PSE) tardan unos minutos. Cuando se apruebe te escribimos por WhatsApp. Guarda tu referencia.</p><span class="ref">Ref. ' + ref + '</span>' +
+            '<div class="fila"><button class="btn btn--contorno" type="button" id="res-cerrar">Cerrar</button></div>');
+          document.getElementById('res-cerrar').addEventListener('click', function(){ cerrarRes(); cerrarCarro(); });
+        })
+        .catch(function(){ if (++intentos < 30) setTimeout(preguntar, 3000); });
+    })();
+  }
+  // vuelve de un pago con redirección (por ejemplo, PSE)
+  if (PAGOS.url) { try { var qs = new URLSearchParams(location.search), qref = qs.get('pago'), qt = qs.get('t');
+    if (qref && qt) { history.replaceState(null, '', location.pathname + (PAGOS.url && qs.get('pagos') ? '?pagos=' + encodeURIComponent(qs.get('pagos')) : '') + location.hash); seguirPago(qref, qt); } } catch(e){} }
 
 
   /* ================= CATÁLOGO POR CATEGORÍAS (nov 2026) =================
