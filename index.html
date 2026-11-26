@@ -595,6 +595,7 @@ body::before{background:#0a0a0a}
 .con-pagos .carro__enviar:hover{border-color:#25d366;color:#25d366}
 .carro__medios{font-size:12.5px;color:var(--tinta-suave);text-align:center;margin:-2px 0 4px}
 .carro__medios[hidden]{display:none}
+.carro__prueba{display:block;color:#141414;background:var(--amarillo);border-radius:8px;padding:4px 8px;margin-bottom:4px;font-weight:700}
 .carro__res{flex:1;overflow-y:auto;padding:28px 22px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;text-align:center}
 .carro__res[hidden]{display:none}
 .carro.con-res .carro__cuerpo,.carro.con-res .carro__pie{display:none}
@@ -1574,13 +1575,15 @@ body.con-barra .tito{bottom:calc(136px + env(safe-area-inset-bottom,0px))}
      PAGOS.url = dirección del servidor de pagos (Cloudflare Worker, carpeta pagos/). Mientras esté vacía,
      el botón "Pagar ahora" no aparece y todo sigue por WhatsApp.
      Para probar en este PC: node pagos/local.js y abrir http://localhost:5173/?pagos=http://localhost:8787 */
-  var PAGOS = { url: '', widget: 'https://checkout.wompi.co/widget.js' };
+  // pruebas: true mientras Wompi esté en Sandbox (muestra el aviso "modo de pruebas" en el carrito)
+  var PAGOS = { url: 'https://acrilmastik-pagos.acrilmastik-pagos.workers.dev', widget: 'https://checkout.wompi.co/widget.js', pruebas: true };
   function guardarP(k, v){ try { localStorage.setItem(k, v); } catch(e){} }
   function borrarP(k){ try { localStorage.removeItem(k); } catch(e){} }
   try { if (/^(localhost|127\.0\.0\.1)$/.test(location.hostname)) { var qp = new URLSearchParams(location.search).get('pagos'); if (qp) { PAGOS.url = qp.replace(/\/$/, ''); if (!/workers\.dev$/.test(PAGOS.url)) PAGOS.widget = PAGOS.url + '/simulador/widget.js'; } } } catch(e){}
   var btnPagar = document.getElementById('carro-pagar'), res = document.getElementById('carro-res');
   if (PAGOS.url) {
     btnPagar.hidden = false; document.getElementById('carro-medios').hidden = false;
+    if (PAGOS.pruebas) { var mp = document.getElementById('carro-medios'); mp.innerHTML = '<b class="carro__prueba">Pagos en modo de PRUEBAS: no se cobra dinero real.</b> Usa la tarjeta 4242 4242 4242 4242, fecha 12/30, CVC 123.'; }
     carro.classList.add('con-pagos');
     document.querySelectorAll('[data-solo-pago]').forEach(function(e){ e.hidden = false; });
     document.getElementById('carro-nota').textContent = 'Paga en línea o envía tu pedido por WhatsApp. Domicilio gratis en Ibagué para compras superiores a $250.000.';
