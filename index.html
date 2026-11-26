@@ -1619,6 +1619,19 @@ body.con-barra .tito{bottom:calc(136px + env(safe-area-inset-bottom,0px))}
       .then(function(j){
         p = j;
         if (j.total !== totalCarro()) avisar('Actualizamos los precios: total ' + pesos(j.total));
+        guardarP('acril-pago', JSON.stringify({ ref: p.referencia, t: p.token }));
+        // Pago real: página completa de Wompi (Web Checkout). La ventana flotante (widget) no deja deslizar en iPhone.
+        // Al terminar, Wompi devuelve al cliente a esta página con ?pago=<ref>&t=<token> y aquí se muestra el resultado.
+        if (!/\/simulador\//.test(PAGOS.widget)) {
+          var q = [['public-key', p.llavePublica], ['currency', p.moneda], ['amount-in-cents', p.montoCentavos], ['reference', p.referencia], ['signature:integrity', p.firma],
+            ['customer-data:full-name', p.cliente.nombre], ['customer-data:phone-number', p.cliente.celular], ['customer-data:phone-number-prefix', '+57']];
+          if (p.cliente.correo) q.push(['customer-data:email', p.cliente.correo]);
+          // Wompi bloquea (403) las direcciones de regreso "localhost": en pruebas locales no se manda
+          if (!/^(localhost|127\.0\.0\.1)$/.test(location.hostname)) q.push(['redirect-url', location.origin + location.pathname + '?pago=' + p.referencia + '&t=' + p.token]);
+          estadoBoton(true, 'Abriendo Wompi…');
+          location.assign('https://checkout.wompi.co/p/?' + q.map(function(x){ return x[0] + '=' + encodeURIComponent(x[1]); }).join('&'));
+          return new Promise(function(){}); // la página se va a Wompi
+        }
         return cargarWidget();
       })
       .then(function(){
