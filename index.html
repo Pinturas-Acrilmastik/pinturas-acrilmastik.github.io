@@ -1577,7 +1577,7 @@ body.con-barra .tito{bottom:calc(136px + env(safe-area-inset-bottom,0px))}
   var PAGOS = { url: '', widget: 'https://checkout.wompi.co/widget.js' };
   function guardarP(k, v){ try { localStorage.setItem(k, v); } catch(e){} }
   function borrarP(k){ try { localStorage.removeItem(k); } catch(e){} }
-  try { if (/^(localhost|127\.0\.0\.1)$/.test(location.hostname)) { var qp = new URLSearchParams(location.search).get('pagos'); if (qp) { PAGOS.url = qp.replace(/\/$/, ''); PAGOS.widget = PAGOS.url + '/simulador/widget.js'; } } } catch(e){}
+  try { if (/^(localhost|127\.0\.0\.1)$/.test(location.hostname)) { var qp = new URLSearchParams(location.search).get('pagos'); if (qp) { PAGOS.url = qp.replace(/\/$/, ''); if (!/workers\.dev$/.test(PAGOS.url)) PAGOS.widget = PAGOS.url + '/simulador/widget.js'; } } } catch(e){}
   var btnPagar = document.getElementById('carro-pagar'), res = document.getElementById('carro-res');
   if (PAGOS.url) {
     btnPagar.hidden = false; document.getElementById('carro-medios').hidden = false;
@@ -1619,9 +1619,10 @@ body.con-barra .tito{bottom:calc(136px + env(safe-area-inset-bottom,0px))}
         return cargarWidget();
       })
       .then(function(){
-        var vuelta = location.origin + location.pathname + '?pago=' + p.referencia + '&t=' + p.token + (PAGOS.url && /^localhost|^127/.test(location.hostname) ? '&pagos=' + encodeURIComponent(PAGOS.url) : '');
-        var cfg = { currency: p.moneda, amountInCents: p.montoCentavos, reference: p.referencia, publicKey: p.llavePublica, signature: { integrity: p.firma }, redirectUrl: vuelta,
+        var cfg = { currency: p.moneda, amountInCents: p.montoCentavos, reference: p.referencia, publicKey: p.llavePublica, signature: { integrity: p.firma },
           customerData: { fullName: p.cliente.nombre, phoneNumber: p.cliente.celular, phoneNumberPrefix: '+57' } };
+        // Wompi bloquea (403) las direcciones de regreso "localhost": en pruebas locales no se manda
+        if (!/^(localhost|127\.0\.0\.1)$/.test(location.hostname)) cfg.redirectUrl = location.origin + location.pathname + '?pago=' + p.referencia + '&t=' + p.token;
         if (p.cliente.correo) cfg.customerData.email = p.cliente.correo;
         guardarP('acril-pago', JSON.stringify({ ref: p.referencia, t: p.token }));
         estadoBoton(false);
